@@ -1,0 +1,29 @@
+.App-header {
+  background-color: #C699F0;
+  background: linear-gradient(10deg, #C699F0, #FF704E);
+  padding: 1em;
+  color: #3E3349;
+  text-align: center;
+  perspective: 2em;
+  perspective-origin: center center;
+  border-bottom: .5em solid #6B5481;
+  border-bottom-color: #FF704E;
+}
+
+.App-header h2 {
+  font-size: 3em;
+  font-weight: bolder;
+  text-shadow: .1em .1em 0 #A686C3;
+  mix-blend-mode: multiply;
+  transform: skew(-30deg) rotateX(10deg);
+  animation: title 18s infinite linear;
+}
+
+@keyframes title {
+  0%, 90% {
+    transform: skew(-30deg) rotateX(10deg);
+  }
+  100% {
+    transform: skew(-30deg) rotateX(370deg);
+  }
+}

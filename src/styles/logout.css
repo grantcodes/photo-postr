@@ -1,0 +1,19 @@
+.logout {
+  text-align: center;
+  padding: 1em;
+}
+
+.logout__user {
+  display: block;
+  margin-bottom: 1em;
+}
+
+.logout__button {
+  font-size: 1em;
+  padding: .2em .8em;
+  border-radius: 1em;
+  border: .1em inset rebeccapurple;
+  background: radial-gradient(red, plum);
+  color: greenyellow;
+  cursor: pointer;
+}

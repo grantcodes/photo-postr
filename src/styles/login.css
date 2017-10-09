@@ -1,0 +1,12 @@
+.login__form {
+  text-align: center;
+  padding: 1em;
+}
+
+.login__form input,
+.login__form button {
+  font-size: 1em;
+  padding: .2em .6em;
+  border: .1em dashed fuchsia;
+  border-radius: 1em;
+}
