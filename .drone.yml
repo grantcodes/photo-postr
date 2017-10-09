@@ -1,0 +1,27 @@
+pipeline:
+    build:
+        image: node
+        commands:
+            - npm install
+            - npm run build
+    deploy:
+        image: appleboy/drone-ssh
+        host: tpxl.io
+        username: grant
+        port: 22
+        script:
+            - cd /srv/www/photo.postrchild.com/htdocs
+            - git pull origin master
+            - npm install
+            - npm run build
+        when:
+            branch: master
+        secrets: [ssh_key]
+    notify:
+        image: plugins/slack
+        webhook: ${SLACK_WEBHOOK}
+        channel: notifications
+        username: drone
+        when:
+            status: [ success, failure ]
+        secrets: [slack_webhook]
