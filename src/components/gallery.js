@@ -23,7 +23,8 @@ class Gallery extends Component {
       this.setState({posting: true});
       const gallery = {
         name: this.props.name,
-        content: this.props.content
+        content: this.props.content,
+        slug: this.props.slug,
       };
       publishGallery(gallery, this.props.photos, this.props.user)
         .then((url) => {
