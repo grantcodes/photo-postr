@@ -58,7 +58,7 @@ export default function publish(gallery, photos, user) {
                     galleryMicropub.properties.content = [gallery.content];
                 }
                 if (gallery.slug) {
-                    galleryMicropub.properties.slug = [gallery.slug];
+                    galleryMicropub.properties['mp-slug'] = [gallery.slug];
                 }
 
                 api('gallery', {
