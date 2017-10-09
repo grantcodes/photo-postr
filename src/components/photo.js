@@ -166,7 +166,7 @@ function mapDispatchToProps(dispatch) {
   return {
       actions: bindActionCreators({
         setPhotoProperty: setPhotoProperty,
-        removePhoto, removePhoto,
+        removePhoto: removePhoto,
       }, dispatch)
   }
 }

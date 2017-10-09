@@ -20,7 +20,7 @@ class App extends Component {
     return (
       <div className="App">
         <div className="App-header">
-          <h2>PhotoPostr 📸</h2>
+          <h2>PhotoPostr <span role="img" aria-label="camera emoji">📸</span></h2>
         </div>
         {login}
         {uploader}

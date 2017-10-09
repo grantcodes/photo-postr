@@ -8,7 +8,7 @@ export default (state = initialState, action) => {
             return state.push(new Map(action.photo));
         }
         case 'SET_PHOTO_PROPERTY' : {
-            const photoIndex = state.findIndex(photo => (photo.get('id') == action.id));
+            const photoIndex = state.findIndex(photo => (photo.get('id') === action.id));
             let photo = state.get(photoIndex);
             photo = photo.set(action.property, action.value);
             return state.set(photoIndex, photo);
@@ -19,7 +19,7 @@ export default (state = initialState, action) => {
             return state.insert(action.destination, olditem);
         }
         case 'REMOVE_PHOTO': {
-            const photoIndex = state.findIndex(photo => (photo.get('id') == action.id));
+            const photoIndex = state.findIndex(photo => (photo.get('id') === action.id));
             if (photoIndex > -1) {
                 state = state.splice(photoIndex, 1);
             }
