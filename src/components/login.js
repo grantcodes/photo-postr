@@ -16,10 +16,6 @@ class Login extends Component {
   }
 
   componentDidMount() {
-    // If there is not a state then generate a random one
-    if (!this.props.user.state) {
-      this.props.actions.setUserOption('state', new Date().getTime());
-    }
     // Probably a redirect from the auth provider.
     if (window.location.search) {
       const urlParams = new URLSearchParams(window.location.search);
@@ -43,7 +39,12 @@ class Login extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    api('authurl', {me: this.state.domain})
+    let state = this.props.user.state;
+    if (!state) {
+      state = new Date().getTime();
+      this.props.actions.setUserOption('state', state);
+    }
+    api('authurl', {me: this.state.domain, state: state})
       .then((res) => {
           if (res.tokenEndpoint) {
             this.props.actions.setUserOption('tokenEndpoint', res.tokenEndpoint);

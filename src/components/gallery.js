@@ -48,8 +48,6 @@ class Gallery extends Component {
   }
 
   render() {
-    let submit = null;
-
     return (
       <form className="gallery" onSubmit={this.handleSubmit}>
         <h3>Gallery Information</h3>

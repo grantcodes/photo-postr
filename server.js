@@ -39,7 +39,7 @@ server.use(express.static('build'));
 
 // Get the authentication url
 server.post('/authurl', function (req, res, next) {
-  micropub.options.me = req.body.me;
+  applyMicropubOptions(req.body);
   micropub.getAuthUrl()
     .then((url) => {
       res.json({
