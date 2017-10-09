@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import {getData} from 'exif-js';
 import moment from 'moment';
 import MapInput from './map-input';
-import {setPhotoProperty} from '../actions';
+import {setPhotoProperty, removePhoto} from '../actions';
 import {postMedia} from '../modules/rest-api';
 import '../styles/photo.css';
 
@@ -26,6 +26,7 @@ class Photo extends Component {
       previewUrl: URL.createObjectURL(this.props.file),
     };
     this.handleLocationChange = this.handleLocationChange.bind(this);
+    this.handleRemove = this.handleRemove.bind(this);
   }
   
   componentDidMount() {
@@ -79,6 +80,11 @@ class Photo extends Component {
   handleLocationChange(latitude, longitude) {
     this.props.actions.setPhotoProperty(this.props.photo.id, 'latitude', latitude);
     this.props.actions.setPhotoProperty(this.props.photo.id, 'longitude', longitude);
+  }
+
+  handleRemove(e) {
+    e.preventDefault();
+    this.props.actions.removePhoto(this.props.photo.id);
   }
   
   render() {
@@ -142,6 +148,8 @@ class Photo extends Component {
               onChange={this.handleLocationChange}
             />
           </div>
+
+          <button className="photo__remove" onClick={this.handleRemove}>Remove</button>
         </div>
       </div>
     );
@@ -158,6 +166,7 @@ function mapDispatchToProps(dispatch) {
   return {
       actions: bindActionCreators({
         setPhotoProperty: setPhotoProperty,
+        removePhoto, removePhoto,
       }, dispatch)
   }
 }

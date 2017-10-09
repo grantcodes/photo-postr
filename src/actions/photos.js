@@ -21,3 +21,10 @@ export const reorderPhotos = (photoToMove, photoDestination) => {
     destination: photoDestination,
   };
 }
+
+export const removePhoto = (photoId) => {
+  return {
+    type: 'REMOVE_PHOTO',
+    id: photoId,
+  };
+};

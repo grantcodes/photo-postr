@@ -18,6 +18,13 @@ export default (state = initialState, action) => {
             state = state.delete(action.index);
             return state.insert(action.destination, olditem);
         }
+        case 'REMOVE_PHOTO': {
+            const photoIndex = state.findIndex(photo => (photo.get('id') == action.id));
+            if (photoIndex > -1) {
+                state = state.splice(photoIndex, 1);
+            }
+            return state;
+        }
         default : {
             return state;
         }
