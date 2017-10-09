@@ -10,7 +10,7 @@ pipeline:
         username: grant
         port: 22
         script:
-            - cd /srv/www/photo.postrchild.com/htdocs
+            - cd /srv/www/photo.postrchild.com
             - git pull origin master
             - npm install
             - npm run build
@@ -19,9 +19,8 @@ pipeline:
         secrets: [ssh_key]
     notify:
         image: plugins/slack
-        webhook: ${SLACK_WEBHOOK}
+        webhook: https://hooks.slack.com/services/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
         channel: notifications
         username: drone
         when:
             status: [ success, failure ]
-        secrets: [slack_webhook]
