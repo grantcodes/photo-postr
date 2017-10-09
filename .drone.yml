@@ -13,6 +13,7 @@ pipeline:
             - cd /srv/www/photo.postrchild.com/htdocs
             - git pull origin master
             - npm install
+            - rm -rf build
             - npm run build
         when:
             branch: master
