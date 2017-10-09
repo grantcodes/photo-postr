@@ -10,7 +10,7 @@ pipeline:
         username: grant
         port: 22
         script:
-            - cd /srv/www/photo.postrchild.com
+            - cd /srv/www/photo.postrchild.com/htdocs
             - git pull origin master
             - npm install
             - npm run build
