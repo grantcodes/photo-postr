@@ -5,7 +5,6 @@ import {getData} from 'exif-js';
 import moment from 'moment';
 import MapInput from './map-input';
 import {setPhotoProperty, removePhoto} from '../actions';
-import {postMedia} from '../modules/rest-api';
 import '../styles/photo.css';
 
 
@@ -63,17 +62,12 @@ class Photo extends Component {
 
     if (!this.props.photo.photoUrl && !this.state.uploading) {
       this.setState({ uploading: true });
-      postMedia(this.props.file, this.props.user)
-        .then((res) => {
-          this.setState({ uploading: false });
-          if (res.url) {
-            this.props.actions.setPhotoProperty(this.props.photo.id, 'photoUrl', res.url);
-          }
-        })
-        .catch((err) => {
-          this.setState({ uploading: false }); 
-          alert(`OH NO! 😱 \n\nSomething went wrong uploading the image "${this.props.file.name}": ${err}`);
-        });
+    }
+  }
+
+  componentWillUpdate(newProps) {
+    if (this.state.uploading && newProps.photo.photoUrl) {
+      this.setState({ uploading: false });
     }
   }
 
