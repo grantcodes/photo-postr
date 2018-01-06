@@ -10,7 +10,7 @@
     "express": "^4.16.1",
     "immutable": "^3.8.2",
     "leaflet": "^1.2.0",
-    "micropub-helper": "^1.2.1",
+    "micropub-helper": "^1.3.4",
     "moment": "^2.18.1",
     "multer": "^1.3.0",
     "react": "^16.0.0",
