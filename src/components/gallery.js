@@ -15,6 +15,12 @@ class Gallery extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  componentDidMount() {
+    window.onbeforeunload = function() {
+      return 'Are you sure you want to leave? Your gallery will be lost';
+    };
+  }
+
   handleSubmit(e) {
     e.preventDefault();
     if (!this.props.photos.length) {
