@@ -1,8 +1,8 @@
-export const addPhoto = (photo) => {
+export const addPhoto = photo => {
   return {
     type: 'ADD_PHOTO',
     photo: photo,
-  };
+  }
 }
 
 export const setPhotoProperty = (id, property, value) => {
@@ -11,7 +11,7 @@ export const setPhotoProperty = (id, property, value) => {
     id: id,
     property: property,
     value: value,
-  };
+  }
 }
 
 export const reorderPhotos = (photoToMove, photoDestination) => {
@@ -19,12 +19,12 @@ export const reorderPhotos = (photoToMove, photoDestination) => {
     type: 'REORDER_PHOTOS',
     index: photoToMove,
     destination: photoDestination,
-  };
+  }
 }
 
-export const removePhoto = (photoId) => {
+export const removePhoto = photoId => {
   return {
     type: 'REMOVE_PHOTO',
     id: photoId,
-  };
-};
+  }
+}

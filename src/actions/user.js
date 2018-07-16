@@ -1,12 +1,12 @@
 export const setUserOption = (property, value) => {
   if (value === false) {
-    localStorage.removeItem(property);
+    localStorage.removeItem(property)
   } else {
-    localStorage.setItem(property, value);
+    localStorage.setItem(property, value)
   }
   return {
     type: 'SET_USER_OPTION',
     property: property,
     value: value,
-  };
+  }
 }

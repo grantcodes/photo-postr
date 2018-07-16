@@ -1,35 +1,47 @@
-import { Map, List } from 'immutable';
+import { Map, List } from 'immutable'
 
 const initialState = new Map({
   uploading: new List([]),
   uploaded: new List([]),
   waiting: new List([]),
-});
+})
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case 'ADD_PHOTO': {
-      return state.update('waiting', (waiting) => waiting.push(action.photo.id));
+      return state.update('waiting', waiting => waiting.push(action.photo.id))
     }
     case 'SET_UPLOAD_UPLOADING': {
       // Remove from waiting.
-      state = state.update('waiting', (waiting) => waiting.filterNot((photoId) => photoId === action.photoId));
+      state = state.update('waiting', waiting =>
+        waiting.filterNot(photoId => photoId === action.photoId)
+      )
       // Add to uploading.
-      return state.update('uploading', (uploading) => uploading.push(action.photoId));
+      return state.update('uploading', uploading =>
+        uploading.push(action.photoId)
+      )
     }
     case 'SET_UPLOAD_UPLOADED': {
       // Remove from uploading.
-      state = state.update('uploading', (uploading) => uploading.filterNot((photoId) => photoId === action.photoId));
+      state = state.update('uploading', uploading =>
+        uploading.filterNot(photoId => photoId === action.photoId)
+      )
       // Add to uploaded.
-      return state.update('uploaded', (uploaded) => uploaded.push(action.photoId));
+      return state.update('uploaded', uploaded => uploaded.push(action.photoId))
     }
     case 'REMOVE_PHOTO': {
-      state = state.update('waiting', (waiting) => waiting.filterNot((photoId) => photoId === action.id));
-      state = state.update('uploading', (uploading) => uploading.filterNot((photoId) => photoId === action.id));
-      return state.update('uploaded', (uploaded) => uploaded.filterNot((photoId) => photoId === action.id));
+      state = state.update('waiting', waiting =>
+        waiting.filterNot(photoId => photoId === action.id)
+      )
+      state = state.update('uploading', uploading =>
+        uploading.filterNot(photoId => photoId === action.id)
+      )
+      return state.update('uploaded', uploaded =>
+        uploaded.filterNot(photoId => photoId === action.id)
+      )
     }
-    default : {
-      return state;
+    default: {
+      return state
     }
   }
-};
+}

@@ -10,9 +10,9 @@
 
 .logout__button {
   font-size: 1em;
-  padding: .2em .8em;
+  padding: 0.2em 0.8em;
   border-radius: 1em;
-  border: .1em inset rebeccapurple;
+  border: 0.1em inset rebeccapurple;
   background: radial-gradient(red, plum);
   color: greenyellow;
   cursor: pointer;

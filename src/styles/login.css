@@ -6,7 +6,7 @@
 .login__form input,
 .login__form button {
   font-size: 1em;
-  padding: .2em .6em;
-  border: .1em dashed fuchsia;
+  padding: 0.2em 0.6em;
+  border: 0.1em dashed fuchsia;
   border-radius: 1em;
 }
