@@ -1,11 +1,15 @@
 import React, { Component } from 'react'
-import 'leaflet/dist/leaflet.css'
+import L from 'leaflet'
 import { Map, Marker, TileLayer } from 'react-leaflet'
+import 'leaflet/dist/leaflet.css'
+import '../styles/map-marker.css'
+
+const divIcon = L.divIcon({ className: 'map-marker' })
 
 const initialState = {
   lat: 0,
   lng: 0,
-  zoom: 0,
+  zoom: 1,
   marker: false,
 }
 
@@ -39,7 +43,7 @@ class MapInput extends Component {
       this.setState({
         lat: newProps.latitude,
         lng: newProps.longitude,
-        zoom: 13,
+        zoom: this.state.zoom < 13 ? 13 : this.state.zoom,
         marker: true,
       })
     }
@@ -63,7 +67,7 @@ class MapInput extends Component {
     this.setState({
       lat: 0,
       lng: 0,
-      zoom: 0,
+      zoom: 1,
       marker: false,
     })
   }
@@ -77,13 +81,17 @@ class MapInput extends Component {
           style={{ height: '15rem' }}
           onClick={this.handleClick}
           onZoom={this.handleZoom}
+          scrollWheelZoom={false}
         >
           <TileLayer
             url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
             attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
           />
           {this.state.marker ? (
-            <Marker position={[this.state.lat, this.state.lng]} />
+            <Marker
+              icon={divIcon}
+              position={[this.state.lat, this.state.lng]}
+            />
           ) : null}
         </Map>
         {this.state.marker ? (

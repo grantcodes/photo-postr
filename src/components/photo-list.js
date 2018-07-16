@@ -1,65 +1,51 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import Photo from './photo'
-import { reorderPhotos } from '../actions'
+import { reorderPhotos, removePhoto } from '../actions'
 
 class PhotoList extends Component {
   constructor(props) {
     super(props)
-    this.onDragEnd = this.onDragEnd.bind(this)
+    this.handleRemove = this.handleRemove.bind(this)
+    this.handleMoveUp = this.handleMoveUp.bind(this)
+    this.handleMoveDown = this.handleMoveDown.bind(this)
   }
 
-  onDragEnd(result) {
-    if (!result.destination) {
-      return
-    }
-    this.props.actions.reorderPhotos(
-      result.source.index,
-      result.destination.index
-    )
+  handleRemove(id) {
+    this.props.actions.removePhoto(id)
+  }
+
+  handleMoveUp(i) {
+    this.props.actions.reorderPhotos(i, i - 1)
+  }
+
+  handleMoveDown(i) {
+    this.props.actions.reorderPhotos(i, i + 1)
   }
 
   render() {
-    return (
-      <DragDropContext onDragEnd={this.onDragEnd}>
-        <Droppable droppableId="droppable">
-          {(provided, snapshot) => (
-            <div ref={provided.innerRef}>
-              {this.props.photos.map((photo, i) => (
-                <Draggable key={photo.id} draggableId={photo.id}>
-                  {(provided, snapshot) => (
-                    <div>
-                      <div
-                        ref={provided.innerRef}
-                        style={provided.draggableStyle}
-                        {...provided.dragHandleProps}
-                      >
-                        <Photo
-                          key={`photo-${i}`}
-                          file={photo.file}
-                          photo={photo}
-                          dragging={snapshot.isDragging}
-                        />
-                      </div>
-                      {provided.placeholder}
-                    </div>
-                  )}
-                </Draggable>
-              ))}
-            </div>
-          )}
-        </Droppable>
-      </DragDropContext>
-    )
+    const { photos } = this.props
+    return photos.map((photo, i) => (
+      <div className="photo-wrapper" key={`photo-${i}`}>
+        <Photo file={photo.file} photo={photo} />
+        <div className="photo-actions">
+          <button onClick={e => this.handleRemove(photo.id)}>❌</button>
+          {photos.length > 1 &&
+            i > 0 && <button onClick={e => this.handleMoveUp(i)}>👆</button>}
+          {photos.length > 1 &&
+            i < photos.length - 1 && (
+              <button onClick={e => this.handleMoveDown(i)}>👇</button>
+            )}
+        </div>
+      </div>
+    ))
   }
 }
 
 function mapStateToProps(state, props) {
   return {
     photos: state.photos.toJS(),
-    user: state.user.toJS(),
   }
 }
 
@@ -68,6 +54,7 @@ function mapDispatchToProps(dispatch) {
     actions: bindActionCreators(
       {
         reorderPhotos: reorderPhotos,
+        removePhoto: removePhoto,
       },
       dispatch
     ),

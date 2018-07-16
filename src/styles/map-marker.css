@@ -1,0 +1,5 @@
+.map-marker {
+  display: block;
+  background-color: var(--main);
+  border-radius: 50%;
+}

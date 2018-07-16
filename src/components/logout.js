@@ -22,7 +22,7 @@ class Logout extends Component {
     return (
       <div className="logout">
         <span className="logout__user">Logged in as {this.props.user.me}</span>
-        <button className="button logout__button" onClick={this.handleLogout}>
+        <button className="button" onClick={this.handleLogout}>
           Log Out
         </button>
       </div>

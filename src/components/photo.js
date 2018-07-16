@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { getData } from 'exif-js'
 import moment from 'moment'
 import MapInput from './map-input'
-import { setPhotoProperty, removePhoto } from '../actions'
+import { setPhotoProperty } from '../actions'
 import '../styles/photo.css'
 
 const ConvertDMSToDD = function(degrees, minutes, seconds, direction) {
@@ -21,10 +21,10 @@ class Photo extends Component {
     this.state = {
       uploading: false,
       exif: null,
+      file: this.props.file,
       previewUrl: URL.createObjectURL(this.props.file),
     }
     this.handleLocationChange = this.handleLocationChange.bind(this)
-    this.handleRemove = this.handleRemove.bind(this)
   }
 
   componentDidMount() {
@@ -94,6 +94,12 @@ class Photo extends Component {
     if (this.state.uploading && newProps.photo.photoUrl) {
       this.setState({ uploading: false })
     }
+    if (newProps.file !== this.state.file) {
+      this.setState({
+        file: newProps.file,
+        previewUrl: URL.createObjectURL(newProps.file),
+      })
+    }
   }
 
   handleLocationChange(latitude, longitude) {
@@ -107,11 +113,6 @@ class Photo extends Component {
       'longitude',
       longitude
     )
-  }
-
-  handleRemove(e) {
-    e.preventDefault()
-    this.props.actions.removePhoto(this.props.photo.id)
   }
 
   render() {
@@ -237,10 +238,6 @@ class Photo extends Component {
               onChange={this.handleLocationChange}
             />
           </div>
-
-          <button className="photo__remove" onClick={this.handleRemove}>
-            Remove
-          </button>
         </div>
       </div>
     )
@@ -258,7 +255,6 @@ function mapDispatchToProps(dispatch) {
     actions: bindActionCreators(
       {
         setPhotoProperty: setPhotoProperty,
-        removePhoto: removePhoto,
       },
       dispatch
     ),

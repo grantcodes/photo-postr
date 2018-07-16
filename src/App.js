@@ -6,7 +6,6 @@ import Uploader from './components/uploader'
 import Login from './components/login'
 import Gallery from './components/gallery'
 import Logout from './components/logout'
-import './styles/App.css'
 
 class App extends Component {
   render() {
@@ -24,14 +23,6 @@ class App extends Component {
 
     return (
       <div className="App">
-        <div className="App-header">
-          <h2>
-            PhotoPostr{' '}
-            <span role="img" aria-label="camera emoji">
-              📸
-            </span>
-          </h2>
-        </div>
         {login}
         {uploader}
         <PhotoList />

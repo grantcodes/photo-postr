@@ -106,6 +106,7 @@ class Gallery extends Component {
 
         <button
           type="submit"
+          className="button"
           disabled={
             this.props.photos.length === 0 ||
             this.props.photos.find(photo => !photo.photoUrl)

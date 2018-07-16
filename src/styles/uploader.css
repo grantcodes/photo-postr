@@ -1,17 +1,16 @@
 .uploader {
   display: block;
   width: 100%;
-  width: calc(100% - 2em);
-  margin: 1em;
+  margin: 1em 0;
   padding: 10%;
-  background: #fafafa;
-  border: 0.5em dashed #c699f0;
+  background: #fff;
+  border: 2px dashed #c699f0;
   border-radius: 0.5em;
   text-align: center;
 }
 
 .uploader__button {
-  border: none;
+  /* border: none;
   font-size: 1rem;
   font-weight: bold;
   color: white;
@@ -21,5 +20,5 @@
   padding: 1em;
   line-height: 1.2;
   border-radius: 10px;
-  transition: all 0.2s;
+  transition: all 0.2s; */
 }

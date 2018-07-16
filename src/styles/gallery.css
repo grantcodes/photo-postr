@@ -1,35 +1,19 @@
 .gallery {
   display: block;
   padding: 1em;
-  border: 1em solid #5c1699;
-  border-radius: 2em;
-  background: #8c27df;
-  max-width: 40em;
   margin: 2em auto;
-  color: white;
+  border-radius: 0.3rem;
+  background-color: var(--light);
+  border: 1px solid var(--secondary);
 }
 
-.gallery button {
-  font-size: 1.4em;
-  font-weight: bold;
-  padding: 1em;
-  color: white;
-  background-color: #ff704e;
-  background-image: linear-gradient(-10deg, #ff704e, #962005);
-  border: 0.2em solid #ff704e;
-  border-radius: 1em;
-  transition: all 0.2s;
+.gallery .button {
 }
 
-.gallery button:hover,
-.gallery button:focus {
-  color: #eee;
-  background-image: linear-gradient(#ff704e, #ff704e);
+.gallery .button:hover,
+.gallery .button:focus {
 }
 
-.gallery button:disabled {
-  color: #aaa;
+.gallery .button:disabled {
   background-color: #666;
-  background-image: linear-gradient(#666, #555);
-  border-color: #777;
 }

@@ -1,18 +1,22 @@
 .photo {
   display: block;
-  max-width: 40em;
   margin: 2em auto;
   padding: 1em;
   overflow: hidden;
-  background: #ff704e;
-  border: 1em groove #ff8f8f;
-  border-radius: 2em;
-  color: white;
+  border-radius: 0.3rem;
+  border: 1px solid;
+  background-color: rgba(0, 0, 0, 0.02);
 }
 
 .photo--is-dragging {
-  background: #fd390d;
-  border: 1em groove #d80df3;
+  max-width: 20em;
+  max-height: 60vh;
+}
+.photo--is-dragging .photo__details {
+  display: none;
+}
+.photo--is-dragging .photo__preview__image {
+  margin-bottom: -2em;
 }
 
 .photo__preview {
@@ -51,7 +55,9 @@
 .photo__preview__image {
   display: block;
   height: auto;
-  width: 100%;
+  max-width: 100%;
+  max-width: calc(100% + 2em);
+  margin: -1em -1em 0 -1em;
 }
 
 .photo__preview__url {
@@ -67,7 +73,7 @@
   line-height: 1.1;
 }
 
-@media (min-width: 20em) {
+/* @media (min-width: 20em) {
   .photo__preview {
     width: 30%;
     margin: 0;
@@ -79,7 +85,7 @@
     float: right;
     padding-left: 1em;
   }
-}
+} */
 
 .photo__label {
   display: block;
@@ -95,4 +101,9 @@
   margin: 0 0 1em;
   border: 1px solid #ccc;
   border-radius: 0.5em;
+}
+
+.photo-actions {
+  margin-top: -2em;
+  margin-bottom: 2em;
 }

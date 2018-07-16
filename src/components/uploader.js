@@ -69,7 +69,7 @@ class Uploader extends Component {
         }}
       >
         <div className="uploader">
-          <button className="uploader__button">
+          <button className="button">
             Drag your photos here or click to select
           </button>
         </div>

@@ -7,13 +7,3 @@
   display: block;
   margin-bottom: 1em;
 }
-
-.logout__button {
-  font-size: 1em;
-  padding: 0.2em 0.8em;
-  border-radius: 1em;
-  border: 0.1em inset rebeccapurple;
-  background: radial-gradient(red, plum);
-  color: greenyellow;
-  cursor: pointer;
-}

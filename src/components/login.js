@@ -74,14 +74,7 @@ class Login extends Component {
           />
           <button type="submit">Login</button>
         </form>
-        <div
-          style={{
-            maxWidth: '40em',
-            padding: '1em',
-            margin: 'auto',
-            textAlign: 'left',
-          }}
-        >
+        <div>
           <h3>WTF is this thing?</h3>
           <p>
             This is a <a href="https://indieweb.org/micropub">micropub</a>{' '}
@@ -98,21 +91,19 @@ class Login extends Component {
             </li>
           </ul>
           <p>
-            Since at the moment this is a very new thing to micropub the gallery
-            request is sent with the collection of photo urls both as a
-            collection property and as children:
+            The gallery request is sent with the collection of photo urls as
+            children:
           </p>
           <div
             dangerouslySetInnerHTML={{
-              __html: `<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">{
-      <span style="color: #007700">&quot;type&quot;</span>: [<span style="background-color: #fff0f0">&quot;h-entry&quot;</span>],
-      <span style="color: #007700">&quot;properties&quot;</span>: {
-          <span style="color: #007700">&quot;category&quot;</span>: [<span style="background-color: #fff0f0">&quot;gallery&quot;</span>],
-          <span style="color: #007700">&quot;collection&quot;</span>: [<span style="background-color: #fff0f0">&quot;https://yoursite.com/photopost1&quot;</span>, <span style="background-color: #fff0f0">&quot;https://yoursite.com/photopost2&quot;</span>]
-      },
-      <span style="color: #007700">&quot;children&quot;</span>: [<span style="background-color: #fff0f0">&quot;https://yoursite.com/photopost1&quot;</span>, <span style="background-color: #fff0f0">&quot;https://yoursite.com/photopost2&quot;</span>]
-  }
-  </pre></div>`,
+              __html: `<pre style="margin: 0; line-height: 125%">{
+  <span style="color: #007700">&quot;type&quot;</span>: [<span style="background-color: #fff0f0">&quot;h-entry&quot;</span>],
+  <span style="color: #007700">&quot;properties&quot;</span>: {
+    <span style="color: #007700">&quot;category&quot;</span>: [<span style="background-color: #fff0f0">&quot;gallery&quot;</span>],
+  },
+  <span style="color: #007700">&quot;children&quot;</span>: [<span style="background-color: #fff0f0">&quot;https://yoursite.com/photopost1&quot;</span>, <span style="background-color: #fff0f0">&quot;https://yoursite.com/photopost2&quot;</span>]
+}
+  </pre>`,
             }}
           />
 
