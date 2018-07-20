@@ -80,6 +80,7 @@ server.post('/token', function(req, res, next) {
 // Upload a file to the media endpoint
 server.post('/media', upload.single('file'), function(req, res, next) {
   if (req.body && req.body.mediaEndpoint && req.body.token && req.file) {
+    req.setTimeout(0) // Disable timeouts
     applyMicropubOptions(req.body)
     const folder = __dirname + '/tmp/' + shorthash.unique(req.body.token)
     if (!fs.existsSync(folder)) {
@@ -138,6 +139,6 @@ server.use((err, req, res, next) => {
   res.json({ error: err })
 })
 
-server.listen(3011, function() {
-  console.log('%s listening on 3011', server.name)
+server.listen(10003, function() {
+  console.log('%s listening on 10003', server.name)
 })
