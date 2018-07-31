@@ -1,21 +1,23 @@
 import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { sortByDate } from '../actions'
+import { sortByDate, showOrderGrid, hideOrderGrid } from '../actions'
 import '../styles/toolbar.css'
 
-const Toolbar = ({ sortByDate }) => (
+const Toolbar = ({ sortByDate, showOrderGrid, hideOrderGrid, orderGrid }) => (
   <div className="toolbar">
-    <button onClick={sortByDate}>📅 Sort by Date</button>
-    {/* <button>👆 Manually Reorder</button> */}
+    {!orderGrid && <button onClick={sortByDate}>📅 Sort by Date</button>}
+    {orderGrid ? (
+      <button onClick={hideOrderGrid}>👍 Done Ordering</button>
+    ) : (
+      <button onClick={showOrderGrid}>👆 Manually Reorder</button>
+    )}
   </div>
 )
 
 function mapStateToProps(state, props) {
   return {
-    // user: state.user.toJS(),
-    // uploading: state.uploading.toJS(),
-    // photos: state.photos.toJS(),
+    orderGrid: state.app.get('orderGridShown'),
   }
 }
 
@@ -23,6 +25,8 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       sortByDate,
+      showOrderGrid,
+      hideOrderGrid,
     },
     dispatch
   )
