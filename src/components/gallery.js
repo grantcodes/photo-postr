@@ -108,8 +108,9 @@ class Gallery extends Component {
           type="submit"
           className="button"
           disabled={
-            this.props.photos.length === 0 ||
-            this.props.photos.find(photo => !photo.photoUrl)
+            this.props.photos.length < 1 ||
+            this.props.photos.find(photo => !photo.photoUrl) ||
+            this.props.photos.find(photo => photo.error)
           }
         >
           Publish Gallery

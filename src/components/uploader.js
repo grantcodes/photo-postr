@@ -7,6 +7,7 @@ import {
   setPhotoUploading,
   setPhotoUploaded,
   setPhotoProperty,
+  setPhotoUploadError,
 } from '../actions'
 import moment from 'moment'
 import { generate as generateId } from 'shortid'
@@ -37,6 +38,7 @@ class Uploader extends Component {
       setPhotoUploading,
       setPhotoUploaded,
       setPhotoProperty,
+      setPhotoUploadError,
     } = this.props.actions
     const uploadLimit = 5
     if (
@@ -55,12 +57,8 @@ class Uploader extends Component {
             }
           })
           .catch(err => {
-            setPhotoUploaded(photo.id)
-            alert(
-              `OH NO! 😱 \n\nSomething went wrong uploading the image "${
-                photo.file.name
-              }": ${err}`
-            )
+            setPhotoUploadError(photo.id)
+            console.log('Error uploading photo: ', err)
           })
       }
     }
@@ -137,10 +135,11 @@ function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators(
       {
-        addPhoto: addPhoto,
-        setPhotoUploading: setPhotoUploading,
-        setPhotoUploaded: setPhotoUploaded,
-        setPhotoProperty: setPhotoProperty,
+        addPhoto,
+        setPhotoUploading,
+        setPhotoUploaded,
+        setPhotoProperty,
+        setPhotoUploadError,
       },
       dispatch
     ),

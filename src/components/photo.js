@@ -116,13 +116,14 @@ class Photo extends Component {
   }
 
   render() {
+    const photoClasses = ['photo']
+    if (this.props.dragging) photoClasses.push('photo--is-dragging')
+    if (this.props.photo.error) photoClasses.push('photo--error')
     return (
-      <div
-        className={'photo ' + (this.props.dragging ? 'photo--is-dragging' : '')}
-      >
+      <div className={photoClasses.join(' ')}>
         <div
           className={
-            !this.props.photo.photoUrl
+            !this.props.photo.photoUrl && !this.props.photo.error
               ? 'photo__preview photo__preview--uploading'
               : 'photo__preview'
           }
@@ -132,11 +133,16 @@ class Photo extends Component {
             alt={'preview of ' + this.props.photo.name}
             className="photo__preview__image"
           />
-          {this.props.photo.photoUrl ? (
+          {this.props.photo.photoUrl && (
             <span className="photo__preview__url">
-              {this.props.photo.photoUrl}
+              👍 {this.props.photo.photoUrl}
             </span>
-          ) : null}
+          )}
+          {this.props.photo.error && (
+            <span className="photo__preview__error">
+              👎 {this.props.photo.error}
+            </span>
+          )}
         </div>
 
         <div className="photo__details">

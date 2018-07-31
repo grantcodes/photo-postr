@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import Photo from './photo'
-import { reorderPhotos, removePhoto } from '../actions'
+import { reorderPhotos, removePhoto, retryPhotoUpload } from '../actions'
 
 class PhotoList extends Component {
   constructor(props) {
@@ -10,6 +10,7 @@ class PhotoList extends Component {
     this.handleRemove = this.handleRemove.bind(this)
     this.handleMoveUp = this.handleMoveUp.bind(this)
     this.handleMoveDown = this.handleMoveDown.bind(this)
+    this.handleRetry = this.handleRetry.bind(this)
   }
 
   handleRemove(id) {
@@ -22,6 +23,10 @@ class PhotoList extends Component {
 
   handleMoveDown(i) {
     this.props.actions.reorderPhotos(i, i + 1)
+  }
+
+  handleRetry(photo) {
+    this.props.actions.retryPhotoUpload(photo)
   }
 
   render() {
@@ -37,6 +42,9 @@ class PhotoList extends Component {
             i < photos.length - 1 && (
               <button onClick={e => this.handleMoveDown(i)}>👇</button>
             )}
+          {photo.error && (
+            <button onClick={e => this.handleRetry(photo)}>Retry Upload</button>
+          )}
         </div>
       </div>
     ))
@@ -53,8 +61,9 @@ function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators(
       {
-        reorderPhotos: reorderPhotos,
-        removePhoto: removePhoto,
+        reorderPhotos,
+        removePhoto,
+        retryPhotoUpload,
       },
       dispatch
     ),

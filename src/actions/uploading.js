@@ -11,3 +11,10 @@ export const setPhotoUploaded = photoId => {
     photoId: photoId,
   }
 }
+
+export const setPhotoUploadError = photoId => {
+  return {
+    type: 'SET_UPLOAD_ERROR',
+    photoId: photoId,
+  }
+}

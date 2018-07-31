@@ -29,6 +29,15 @@ export default (state = initialState, action) => {
       // Add to uploaded.
       return state.update('uploaded', uploaded => uploaded.push(action.photoId))
     }
+    case 'SET_UPLOAD_ERROR': {
+      // Remove from uploading.
+      return state.update('uploading', uploading =>
+        uploading.filterNot(photoId => photoId === action.photoId)
+      )
+    }
+    case 'RETRY_UPLOAD': {
+      return state.update('waiting', waiting => waiting.push(action.photo.id))
+    }
     case 'REMOVE_PHOTO': {
       state = state.update('waiting', waiting =>
         waiting.filterNot(photoId => photoId === action.id)

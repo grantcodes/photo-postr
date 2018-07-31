@@ -25,6 +25,26 @@ export default (state = initialState, action) => {
       }
       return state
     }
+    case 'SET_UPLOAD_ERROR': {
+      const photoIndex = state.findIndex(
+        photo => photo.get('id') === action.photoId
+      )
+      if (photoIndex > -1) {
+        let photo = state.get(photoIndex)
+        photo = photo.set('error', 'Error uploading file to media endpoint')
+        state = state.set(photoIndex, photo)
+      }
+      return state
+    }
+    case 'RETRY_UPLOAD': {
+      const photoIndex = state.findIndex(photo => photo.get('id') === action.id)
+      let photo = state.get(photoIndex)
+      if (photo) {
+        photo = photo.delete('error')
+        state = state.set(photoIndex, photo)
+      }
+      return state
+    }
     default: {
       return state
     }

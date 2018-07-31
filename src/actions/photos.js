@@ -5,6 +5,13 @@ export const addPhoto = photo => {
   }
 }
 
+export const retryPhotoUpload = photo => {
+  return {
+    type: 'RETRY_UPLOAD',
+    photo: photo,
+  }
+}
+
 export const setPhotoProperty = (id, property, value) => {
   return {
     type: 'SET_PHOTO_PROPERTY',
