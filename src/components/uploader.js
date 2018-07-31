@@ -27,19 +27,9 @@ class Uploader extends Component {
     window.addEventListener('dragenter', e =>
       this.setState({ fullscreen: true })
     )
-    // window.addEventListener('dragleave', e =>
-    //   this.setState({ fullscreen: false })
-    // )
     window.addEventListener('dragend', e =>
       this.setState({ fullscreen: false })
     )
-    // dragstart	The user starts dragging an element or text selection.
-    // drag	An element or text selection is being dragged (Fired continuously every 350ms).
-    // dragend	A drag operation is being ended (by releasing a mouse button or hitting the escape key).
-    // dragenter	A dragged element or text selection enters a valid drop target.
-    // dragover	An element or text selection is being dragged over a valid drop target. (Fired continuously every 350ms.)
-    // dragleave	A dragged element or text selection leaves a valid drop target.
-    // drop	An element is dropped on a valid drop target.
   }
 
   componentWillReceiveProps(newProps) {
