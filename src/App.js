@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import PhotoList from './components/photo-list'
 import Uploader from './components/uploader'
 import Login from './components/login'
+import Toolbar from './components/toolbar'
 import Gallery from './components/gallery'
 import Logout from './components/logout'
 
@@ -25,6 +26,7 @@ class App extends Component {
       <div className="App">
         {login}
         {uploader}
+        <Toolbar />
         <PhotoList />
         {this.props.user.token ? <Gallery /> : null}
         {this.props.user.token ? <Logout /> : null}

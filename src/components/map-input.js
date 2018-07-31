@@ -78,7 +78,7 @@ class MapInput extends Component {
         <Map
           center={[this.state.lat, this.state.lng]}
           zoom={this.state.zoom}
-          style={{ height: '15rem' }}
+          style={{ height: '15rem', zIndex: 1 }}
           onClick={this.handleClick}
           onZoom={this.handleZoom}
           scrollWheelZoom={false}

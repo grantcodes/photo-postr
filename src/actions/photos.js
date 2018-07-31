@@ -29,6 +29,10 @@ export const reorderPhotos = (photoToMove, photoDestination) => {
   }
 }
 
+export const sortByDate = () => ({
+  type: 'SORT_PHOTOS_BY_DATE',
+})
+
 export const removePhoto = photoId => {
   return {
     type: 'REMOVE_PHOTO',

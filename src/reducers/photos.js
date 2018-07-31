@@ -18,6 +18,12 @@ export default (state = initialState, action) => {
       state = state.delete(action.index)
       return state.insert(action.destination, olditem)
     }
+    case 'SORT_PHOTOS_BY_DATE': {
+      return state.sort(
+        (photoA, photoB) =>
+          photoA.get('date').valueOf() - photoB.get('date').valueOf()
+      )
+    }
     case 'REMOVE_PHOTO': {
       const photoIndex = state.findIndex(photo => photo.get('id') === action.id)
       if (photoIndex > -1) {
