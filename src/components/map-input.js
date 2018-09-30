@@ -84,8 +84,8 @@ class MapInput extends Component {
           scrollWheelZoom={false}
         >
           <TileLayer
-            url="https://{s}.tile.osm.org/{z}/{x}/{y}.png"
-            attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
+            url="https://{s}.tile.openstreetmap.se/hydda/full/{z}/{x}/{y}.png"
+            attribution={`Tiles courtesy of <a href="http://openstreetmap.se/" target="_blank">OpenStreetMap Sweden</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>`}
           />
           {this.state.marker ? (
             <Marker

@@ -13,6 +13,7 @@ export default function publish(gallery, photos, user) {
         properties: {
           photo: [photo.photoUrl],
           category: ['gallery-photo'],
+          visibility: ['unlisted'],
           published: [photo.date.format()],
         },
       }

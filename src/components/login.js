@@ -20,10 +20,9 @@ class Login extends Component {
     if (window.location.search) {
       const urlParams = new URLSearchParams(window.location.search)
       const code = urlParams.get('code')
-      const me = urlParams.get('me')
       const state = urlParams.get('state')
-      if (code && me && state) {
-        this.props.actions.setUserOption('me', me)
+      if (code && state) {
+        console.log('Logging in or something')
         api('token', {
           code: code,
           ...this.props.user,
@@ -44,6 +43,7 @@ class Login extends Component {
       state = new Date().getTime()
       this.props.actions.setUserOption('state', state)
     }
+    this.props.actions.setUserOption('me', this.state.domain)
     api('authurl', { me: this.state.domain, state: state })
       .then(res => {
         if (res.tokenEndpoint) {

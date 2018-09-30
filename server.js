@@ -18,7 +18,7 @@ const upload = multer({
 let micropub = new Micropub({
   clientId: config.apiUrl,
   redirectUri: config.redirectUrl,
-  scope: 'post create',
+  scope: 'create',
 })
 
 const applyMicropubOptions = options => {

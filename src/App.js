@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 // import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux'
 import PhotoList from './components/photo-list'
@@ -10,26 +10,26 @@ import Logout from './components/logout'
 
 class App extends Component {
   render() {
-    let uploader = null
-    let login = <Login />
-    if (
-      this.props.user.me &&
-      this.props.user.token &&
-      this.props.user.micropubEndpoint &&
-      this.props.user.mediaEndpoint
-    ) {
-      uploader = <Uploader />
-      login = null
-    }
+    const { user } = this.props
+    const isLoggedIn =
+      user &&
+      user.me &&
+      user.token &&
+      user.micropubEndpoint &&
+      user.mediaEndpoint
 
     return (
       <div className="App">
-        {login}
-        {uploader}
-        <Toolbar />
-        <PhotoList />
-        {this.props.user.token ? <Gallery /> : null}
-        {this.props.user.token ? <Logout /> : null}
+        {!isLoggedIn && <Login />}
+        {isLoggedIn && (
+          <Fragment>
+            <Uploader />
+            <Toolbar />
+            <PhotoList />
+            <Gallery />
+            <Logout />
+          </Fragment>
+        )}
       </div>
     )
   }
