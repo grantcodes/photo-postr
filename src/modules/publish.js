@@ -47,7 +47,6 @@ export default function publish(gallery, photos, user) {
         type: ['h-entry'],
         properties: {
           category: ['gallery'],
-          collection: urls,
         },
         children: urls,
       }
