@@ -56,6 +56,8 @@ class Gallery extends Component {
   }
 
   render() {
+    const { actions, name, slug, content, photos } = this.props
+    const { posting } = this.state
     return (
       <form className="gallery" onSubmit={this.handleSubmit}>
         <h3>Gallery Information</h3>
@@ -68,10 +70,8 @@ class Gallery extends Component {
             type="text"
             id="gallery__name"
             className="photo__input"
-            value={this.props.name}
-            onChange={e => {
-              this.props.actions.setName(e.target.value)
-            }}
+            value={name}
+            onChange={e => actions.setName(e.target.value)}
           />
         </div>
 
@@ -83,10 +83,8 @@ class Gallery extends Component {
             type="text"
             id="gallery__slug"
             className="photo__input"
-            value={this.props.slug}
-            onChange={e => {
-              this.props.actions.setSlug(e.target.value)
-            }}
+            value={slug}
+            onChange={e => actions.setSlug(e.target.value)}
           />
         </div>
 
@@ -97,10 +95,8 @@ class Gallery extends Component {
           <textarea
             id="gallery__content"
             className="photo__input"
-            value={this.props.content}
-            onChange={e => {
-              this.props.actions.setContent(e.target.value)
-            }}
+            value={content}
+            onChange={e => actions.setContent(e.target.value)}
           />
         </div>
 
@@ -108,12 +104,13 @@ class Gallery extends Component {
           type="submit"
           className="button"
           disabled={
-            this.props.photos.length < 1 ||
-            this.props.photos.find(photo => !photo.photoUrl) ||
-            this.props.photos.find(photo => photo.error)
+            posting ||
+            photos.length < 1 ||
+            photos.find(photo => !photo.photoUrl) ||
+            photos.find(photo => photo.error)
           }
         >
-          Publish Gallery
+          {posting ? 'Posting...' : 'Publish Gallery'}
         </button>
       </form>
     )

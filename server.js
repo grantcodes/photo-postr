@@ -132,6 +132,11 @@ server.post('/gallery', function(req, res, next) {
 
 // Error handler
 server.use((err, req, res, next) => {
+  if (err && err.error && err.error.response && err.error.response.data) {
+    console.log('Error Response', err.error.response.data)
+  } else {
+    console.log('Ran into an error:', err)
+  }
   res.status(err.status || 500)
   if (err.message) {
     err = err.message
