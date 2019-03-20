@@ -89,10 +89,26 @@ class Login extends Component {
             <li>
               <a href="https://indieweb.org/collection">Collection</a> support
             </li>
+            <li>Visibility=unlisted support</li>
           </ul>
+          <p>Each photo is sent individually:</p>
+          <div
+            dangerouslySetInnerHTML={{
+              __html: `<pre style="margin: 0; line-height: 125%">{
+  <span style="color: #007700">&quot;type&quot;</span>: [<span style="background-color: #fff0f0">&quot;h-entry&quot;</span>],
+  <span style="color: #007700">&quot;properties&quot;</span>: {
+    <span style="color: #007700">&quot;category&quot;</span>: [<span style="background-color: #fff0f0">&quot;gallery-photo&quot;</span>],
+    <span style="color: #007700">&quot;visibility&quot;</span>: [<span style="background-color: #fff0f0">&quot;unlisted&quot;</span>],
+    <span style="color: #007700">&quot;name&quot;</span>: [<span style="background-color: #fff0f0">&quot;Photo title&quot;</span>],
+    <span style="color: #007700">&quot;photo&quot;</span>: [<span style="background-color: #fff0f0">&quot;https://yoursite.com/media/photo.jpg&quot;</span>],
+  }
+}
+</pre>`,
+            }}
+          />
           <p>
-            The gallery request is sent with the collection of photo urls as
-            children:
+            Then the gallery request is sent with the collection of photo urls
+            as children:
           </p>
           <div
             dangerouslySetInnerHTML={{
@@ -106,12 +122,6 @@ class Login extends Component {
   </pre>`,
             }}
           />
-
-          <p>
-            There is also no set way to hide the individual photo posts from
-            your main feed, so the category <code>gallery-photo</code> is added
-            to the photo posts and you may hide them if you wish.
-          </p>
         </div>
       </div>
     )

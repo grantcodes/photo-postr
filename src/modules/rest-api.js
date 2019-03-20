@@ -38,7 +38,7 @@ export default function api(route, params = {}) {
 export function postMedia(file, data) {
   let request = {
     method: 'POST',
-    body: objectToFormData({ file: file, ...data }),
+    body: objectToFormData({ file, ...data }),
   }
   return new Promise((fulfill, reject) => {
     fetch(url + 'media', request)
