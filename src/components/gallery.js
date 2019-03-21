@@ -123,6 +123,7 @@ function mapStateToProps(state, props) {
     photos: state.photos.toJS(),
     name: state.gallery.get('name'),
     content: state.gallery.get('content'),
+    slug: state.gallery.get('slug'),
   }
 }
 

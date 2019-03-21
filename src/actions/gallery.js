@@ -12,9 +12,9 @@ export const setGalleryContent = content => {
   }
 }
 
-export const setGallerySlug = content => {
+export const setGallerySlug = slug => {
   return {
     type: 'SET_GALLERY_SLUG',
-    value: content,
+    value: slug,
   }
 }
