@@ -16,7 +16,7 @@ const upload = multer({
 
 let micropub = new Micropub({
   clientId: process.env.URL,
-  redirectUri: process.env.URL + '/auth',
+  redirectUri: process.env.URL,
   scope: 'create',
 })
 
