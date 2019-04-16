@@ -6,7 +6,6 @@ const cors = require('cors')
 const multer = require('multer')
 const Micropub = require('micropub-helper')
 const shorthash = require('shorthash')
-const config = require('./src/config.json')
 
 // const storage = multer.memoryStorage();
 const upload = multer({
@@ -16,8 +15,8 @@ const upload = multer({
 })
 
 let micropub = new Micropub({
-  clientId: config.apiUrl,
-  redirectUri: config.redirectUrl,
+  clientId: process.env.URL,
+  redirectUri: process.env.URL + '/auth',
   scope: 'create',
 })
 
@@ -144,6 +143,11 @@ server.use((err, req, res, next) => {
   res.json({ error: err })
 })
 
-server.listen(10003, function() {
-  console.log('%s listening on 10003', server.name)
+server.listen(process.env.API_PORT || 10003, function() {
+  console.log(
+    process.env.NODE_ENV === 'production'
+      ? 'App started on port ' + (process.env.API_PORT || 10003)
+      : 'Development api server started',
+    server.name
+  )
 })

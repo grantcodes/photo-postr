@@ -1,6 +1,8 @@
-import config from '../config.json'
-
-const url = config.apiUrl
+const url =
+  process.env.NODE_ENV === 'production'
+    ? '/'
+    : 'http://localhost:' + process.env.REACT_APP_PORT + '/'
+console.log(process.env)
 
 function objectToFormData(object, formData = new FormData(), name = false) {
   Object.keys(object).forEach(key => {
