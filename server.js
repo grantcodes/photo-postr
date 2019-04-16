@@ -143,10 +143,10 @@ server.use((err, req, res, next) => {
   res.json({ error: err })
 })
 
-server.listen(process.env.API_PORT || 10003, function() {
+server.listen(process.env.PORT || 10003, function() {
   console.log(
     process.env.NODE_ENV === 'production'
-      ? 'App started on port ' + (process.env.API_PORT || 10003)
+      ? 'App started on port ' + (process.env.PORT || 10003)
       : 'Development api server started',
     server.name
   )
