@@ -19,7 +19,7 @@ let micropub = new Micropub({
   scope: 'create',
 })
 
-const applyMicropubOptions = options => {
+const applyMicropubOptions = (options) => {
   for (const key in options) {
     if (options[key]) {
       micropub.options[key] = options[key]
@@ -36,31 +36,31 @@ server.use(bodyParser.json({ limit: '50mb' }))
 server.use(express.static('build'))
 
 // Get the authentication url
-server.post('/authurl', function(req, res, next) {
+server.post('/authurl', function (req, res, next) {
   applyMicropubOptions(req.body)
   micropub
     .getAuthUrl()
-    .then(url => {
+    .then((url) =>
       res.json({
         url: url,
         authEndpoint: micropub.options.authEndpoint,
         tokenEndpoint: micropub.options.tokenEndpoint,
         micropubEndpoint: micropub.options.micropubEndpoint,
       })
-    })
-    .catch(err => next(err))
+    )
+    .catch(next)
 })
 
 // Get the access token
-server.post('/token', function(req, res, next) {
+server.post('/token', function (req, res, next) {
   applyMicropubOptions(req.body)
   micropub
     .getToken(req.body.code)
-    .then(token => {
+    .then((token) => {
       micropub.options.token = token
       micropub
         .query('config')
-        .then(data => {
+        .then((data) => {
           if (data && data['media-endpoint']) {
             res.json({
               token: token,
@@ -70,13 +70,13 @@ server.post('/token', function(req, res, next) {
             next(new Error('Missing media endpoint'))
           }
         })
-        .catch(err => next(err))
+        .catch(next)
     })
-    .catch(err => next(err))
+    .catch(next)
 })
 
 // Upload a file to the media endpoint
-server.post('/media', upload.single('file'), function(req, res, next) {
+server.post('/media', upload.single('file'), function (req, res, next) {
   if (req.body && req.body.mediaEndpoint && req.body.token && req.file) {
     req.setTimeout(0) // Disable timeouts
     applyMicropubOptions(req.body)
@@ -89,11 +89,11 @@ server.post('/media', upload.single('file'), function(req, res, next) {
 
     micropub
       .postMedia(fs.createReadStream(filePath))
-      .then(url => {
+      .then((url) => {
         fs.unlinkSync(filePath)
         res.json({ url: url })
       })
-      .catch(err => {
+      .catch((err) => {
         fs.unlinkSync(filePath)
         next(err)
       })
@@ -103,29 +103,21 @@ server.post('/media', upload.single('file'), function(req, res, next) {
 })
 
 // Send the photo micropub
-server.post('/photo', function(req, res, next) {
+server.post('/photo', function (req, res, next) {
   applyMicropubOptions(req.body.user)
   micropub
     .create(req.body.micropub, 'json')
-    .then(url => {
-      res.json({ url: url })
-    })
-    .catch(err => {
-      next(err)
-    })
+    .then((url) => res.json({ url: url }))
+    .catch(next)
 })
 
 // Send gallery micropub
-server.post('/gallery', function(req, res, next) {
+server.post('/gallery', function (req, res, next) {
   applyMicropubOptions(req.body.user)
   micropub
     .create(req.body.micropub, 'json')
-    .then(url => {
-      res.json({ url: url })
-    })
-    .catch(err => {
-      next(err)
-    })
+    .then((url) => res.json({ url: url }))
+    .catch(next)
 })
 
 // Error handler
@@ -142,11 +134,11 @@ server.use((err, req, res, next) => {
   res.json({ error: err })
 })
 
-server.listen(process.env.PORT || 10003, function() {
+server.listen(process.env.PORT || 10003, () =>
   console.log(
     process.env.NODE_ENV === 'production'
       ? 'App started on port ' + (process.env.PORT || 10003)
       : 'Development api server started',
     server.name
   )
-})
+)

@@ -5,7 +5,7 @@ const url =
 console.log(process.env)
 
 function objectToFormData(object, formData = new FormData(), name = false) {
-  Object.keys(object).forEach(key => {
+  Object.keys(object).forEach((key) => {
     const data = object[key]
     if (name) {
       key = name + '[' + key + ']'
@@ -31,9 +31,9 @@ export default function api(route, params = {}) {
 
   return new Promise((fulfill, reject) => {
     fetch(url + route, options)
-      .then(res => res.json())
-      .then(res => (res.error ? reject(res.error) : fulfill(res)))
-      .catch(err => reject(err))
+      .then((res) => res.json())
+      .then((res) => (res.error ? reject(res.error) : fulfill(res)))
+      .catch((err) => reject(err))
   })
 }
 
@@ -44,8 +44,8 @@ export function postMedia(file, data) {
   }
   return new Promise((fulfill, reject) => {
     fetch(url + 'media', request)
-      .then(res => res.json())
-      .then(res => (res.error ? reject(res.error) : fulfill(res)))
-      .catch(err => reject(err))
+      .then((res) => res.json())
+      .then((res) => (res.error ? reject(res.error) : fulfill(res)))
+      .catch((err) => reject(err))
   })
 }

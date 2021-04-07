@@ -4,7 +4,7 @@ export default function publish(gallery, photos, user) {
   return new Promise((fulfill, reject) => {
     let photoPromises = []
 
-    photos.forEach(photo => {
+    photos.forEach((photo) => {
       if (!photo.photoUrl) {
         return reject('Not all photos are uploaded yet')
       }
@@ -36,10 +36,10 @@ export default function publish(gallery, photos, user) {
       photoPromises.push(photoPromise)
     })
 
-    Promise.all(photoPromises).then(photoPosts => {
+    Promise.all(photoPromises).then((photoPosts) => {
       // All photos are posted, now to make the gallery post
       let urls = []
-      photoPosts.forEach(photoPost => {
+      photoPosts.forEach((photoPost) => {
         urls.push(photoPost.url)
       })
 
@@ -65,11 +65,10 @@ export default function publish(gallery, photos, user) {
         micropub: galleryMicropub,
         user: user,
       })
-        .then(
-          galleryPost =>
-            galleryPost.url ? fulfill(galleryPost.url) : reject(galleryPost)
+        .then((galleryPost) =>
+          galleryPost.url ? fulfill(galleryPost.url) : reject(galleryPost)
         )
-        .catch(err => reject(err))
+        .catch((err) => reject(err))
     })
   })
 }

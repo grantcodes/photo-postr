@@ -18,7 +18,7 @@ const localStorageOptions = [
   'state',
 ]
 
-localStorageOptions.forEach(option => {
+localStorageOptions.forEach((option) => {
   const value = localStorage.getItem(option)
   if (value) {
     initialState = initialState.set(option, value)

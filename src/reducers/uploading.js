@@ -9,44 +9,46 @@ const initialState = new Map({
 export default (state = initialState, action) => {
   switch (action.type) {
     case 'ADD_PHOTO': {
-      return state.update('waiting', waiting => waiting.push(action.photo.id))
+      return state.update('waiting', (waiting) => waiting.push(action.photo.id))
     }
     case 'SET_UPLOAD_UPLOADING': {
       // Remove from waiting.
-      state = state.update('waiting', waiting =>
-        waiting.filterNot(photoId => photoId === action.photoId)
+      state = state.update('waiting', (waiting) =>
+        waiting.filterNot((photoId) => photoId === action.photoId)
       )
       // Add to uploading.
-      return state.update('uploading', uploading =>
+      return state.update('uploading', (uploading) =>
         uploading.push(action.photoId)
       )
     }
     case 'SET_UPLOAD_UPLOADED': {
       // Remove from uploading.
-      state = state.update('uploading', uploading =>
-        uploading.filterNot(photoId => photoId === action.photoId)
+      state = state.update('uploading', (uploading) =>
+        uploading.filterNot((photoId) => photoId === action.photoId)
       )
       // Add to uploaded.
-      return state.update('uploaded', uploaded => uploaded.push(action.photoId))
+      return state.update('uploaded', (uploaded) =>
+        uploaded.push(action.photoId)
+      )
     }
     case 'SET_UPLOAD_ERROR': {
       // Remove from uploading.
-      return state.update('uploading', uploading =>
-        uploading.filterNot(photoId => photoId === action.photoId)
+      return state.update('uploading', (uploading) =>
+        uploading.filterNot((photoId) => photoId === action.photoId)
       )
     }
     case 'RETRY_UPLOAD': {
-      return state.update('waiting', waiting => waiting.push(action.photo.id))
+      return state.update('waiting', (waiting) => waiting.push(action.photo.id))
     }
     case 'REMOVE_PHOTO': {
-      state = state.update('waiting', waiting =>
-        waiting.filterNot(photoId => photoId === action.id)
+      state = state.update('waiting', (waiting) =>
+        waiting.filterNot((photoId) => photoId === action.id)
       )
-      state = state.update('uploading', uploading =>
-        uploading.filterNot(photoId => photoId === action.id)
+      state = state.update('uploading', (uploading) =>
+        uploading.filterNot((photoId) => photoId === action.id)
       )
-      return state.update('uploaded', uploaded =>
-        uploaded.filterNot(photoId => photoId === action.id)
+      return state.update('uploaded', (uploaded) =>
+        uploaded.filterNot((photoId) => photoId === action.id)
       )
     }
     default: {

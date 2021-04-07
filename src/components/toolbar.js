@@ -15,13 +15,11 @@ const Toolbar = ({ sortByDate, showOrderGrid, hideOrderGrid, orderGrid }) => (
   </div>
 )
 
-function mapStateToProps(state, props) {
-  return {
-    orderGrid: state.app.get('orderGridShown'),
-  }
-}
+const mapStateToProps = (state, props) => ({
+  orderGrid: state.app.get('orderGridShown'),
+})
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       sortByDate,
@@ -31,7 +29,4 @@ const mapDispatchToProps = dispatch =>
     dispatch
   )
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Toolbar)
+export default connect(mapStateToProps, mapDispatchToProps)(Toolbar)

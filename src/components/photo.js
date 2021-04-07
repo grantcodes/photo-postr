@@ -1,13 +1,14 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { getData } from 'exif-js'
 import moment from 'moment'
+import classnames from 'classnames'
 import MapInput from './map-input'
 import { setPhotoProperty } from '../actions'
 import '../styles/photo.css'
 
-const ConvertDMSToDD = function(degrees, minutes, seconds, direction) {
+const ConvertDMSToDD = function (degrees, minutes, seconds, direction) {
   var dd = Number(degrees) + Number(minutes) / 60 + Number(seconds) / (60 * 60)
   if (direction === 'S' || direction === 'W') {
     dd = dd * -1
@@ -15,36 +16,27 @@ const ConvertDMSToDD = function(degrees, minutes, seconds, direction) {
   return dd
 }
 
-class Photo extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      uploading: false,
-      exif: null,
-      file: this.props.file,
-      previewUrl: URL.createObjectURL(this.props.file),
-    }
-    this.handleLocationChange = this.handleLocationChange.bind(this)
-  }
+const Photo = ({ actions, user, photo, file: fileProp, dragging = false }) => {
+  const [uploading, setUploading] = useState(false)
+  const [exif, setExif] = useState(null)
+  const [file, setFile] = useState(fileProp)
+  const [previewUrl, setPreviewUrl] = useState(URL.createObjectURL(fileProp))
 
-  componentDidMount() {
-    // Get exif data
-    const self = this
-
-    if (!this.state.exif) {
-      getData(this.props.file, function() {
+  useEffect(() => {
+    if (!exif) {
+      getData(fileProp, function () {
         if (this.exifdata) {
           // Set date from exif data
-          self.setState({ exif: this.exifdata })
+          setExif(this.exifdata)
           if (this.exifdata.DateTimeOriginal) {
-            self.props.actions.setPhotoProperty(
-              self.props.photo.id,
+            actions.setPhotoProperty(
+              photo.id,
               'date',
               moment(this.exifdata.DateTimeOriginal, 'YYYY:MM:DD hh:mm:ss')
             )
           } else if (this.exifdata.DateTime) {
-            self.props.actions.setPhotoProperty(
-              self.props.photo.id,
+            actions.setPhotoProperty(
+              photo.id,
               'date',
               moment(this.exifdata.DateTime, 'YYYY:MM:DD hh:mm:ss')
             )
@@ -70,204 +62,152 @@ class Photo extends Component {
               this.exifdata.GPSLongitude[2],
               this.exifdata.GPSLongitudeRef
             )
-            self.props.actions.setPhotoProperty(
-              self.props.photo.id,
-              'latitude',
-              lat
-            )
-            self.props.actions.setPhotoProperty(
-              self.props.photo.id,
-              'longitude',
-              lng
-            )
+            actions.setPhotoProperty(photo.id, 'latitude', lat)
+            actions.setPhotoProperty(photo.id, 'longitude', lng)
           }
         }
       })
     }
 
-    if (!this.props.photo.photoUrl && !this.state.uploading) {
-      this.setState({ uploading: true })
+    if (!photo.photoUrl && !uploading) {
+      setUploading(true)
     }
+  }, [])
+
+  useEffect(() => {
+    if (uploading && photo.photoUrl) {
+      setUploading(false)
+    }
+  }, [photo])
+
+  useEffect(() => {
+    if (fileProp !== file) {
+      setFile(fileProp)
+      setPreviewUrl(URL.createObjectURL(fileProp))
+    }
+  }, [fileProp])
+
+  const handleLocationChange = (latitude, longitude) => {
+    actions.setPhotoProperty(photo.id, 'latitude', latitude)
+    actions.setPhotoProperty(photo.id, 'longitude', longitude)
   }
 
-  componentWillUpdate(newProps) {
-    if (this.state.uploading && newProps.photo.photoUrl) {
-      this.setState({ uploading: false })
-    }
-    if (newProps.file !== this.state.file) {
-      this.setState({
-        file: newProps.file,
-        previewUrl: URL.createObjectURL(newProps.file),
-      })
-    }
-  }
+  return (
+    <div
+      className={classnames('photo', {
+        'photo--is-dragging': dragging,
+        'photo--error': photo.error,
+      })}
+    >
+      <div
+        className={classnames('photo__preview', {
+          'photo__preview--uploading': !photo.photoUrl && !photo.error,
+        })}
+      >
+        <img
+          src={previewUrl}
+          alt={'preview of ' + photo.name}
+          className="photo__preview__image"
+        />
+        {photo.photoUrl && (
+          <span className="photo__preview__url">👍 {photo.photoUrl}</span>
+        )}
+        {photo.error && (
+          <span className="photo__preview__error">👎 {photo.error}</span>
+        )}
+      </div>
 
-  handleLocationChange(latitude, longitude) {
-    this.props.actions.setPhotoProperty(
-      this.props.photo.id,
-      'latitude',
-      latitude
-    )
-    this.props.actions.setPhotoProperty(
-      this.props.photo.id,
-      'longitude',
-      longitude
-    )
-  }
-
-  render() {
-    const photoClasses = ['photo']
-    if (this.props.dragging) photoClasses.push('photo--is-dragging')
-    if (this.props.photo.error) photoClasses.push('photo--error')
-    return (
-      <div className={photoClasses.join(' ')}>
-        <div
-          className={
-            !this.props.photo.photoUrl && !this.props.photo.error
-              ? 'photo__preview photo__preview--uploading'
-              : 'photo__preview'
-          }
-        >
-          <img
-            src={this.state.previewUrl}
-            alt={'preview of ' + this.props.photo.name}
-            className="photo__preview__image"
+      <div className="photo__details">
+        <div>
+          <label htmlFor={'photo__name' + photo.id} className="photo__label">
+            Name
+          </label>
+          <input
+            type="text"
+            id={'photo__name' + photo.id}
+            className="photo__input photo__name"
+            value={photo.name}
+            onKeyDown={(e) => e.stopPropagation()}
+            onMouseDown={(e) => e.stopPropagation()}
+            onChange={(e) => {
+              actions.setPhotoProperty(photo.id, 'name', e.target.value)
+            }}
           />
-          {this.props.photo.photoUrl && (
-            <span className="photo__preview__url">
-              👍 {this.props.photo.photoUrl}
-            </span>
-          )}
-          {this.props.photo.error && (
-            <span className="photo__preview__error">
-              👎 {this.props.photo.error}
-            </span>
-          )}
         </div>
 
-        <div className="photo__details">
-          <div>
-            <label
-              htmlFor={'photo__name' + this.props.photo.id}
-              className="photo__label"
-            >
-              Name
-            </label>
+        <div>
+          <label htmlFor={'photo__date' + photo.id} className="photo__label">
+            Date
+          </label>
+          <input
+            type="datetime-local"
+            id={'photo__date' + photo.id}
+            className="photo__input photo__date"
+            value={photo.date.format('YYYY-MM-DDThh:mm:ss')}
+            onKeyDown={(e) => e.stopPropagation()}
+            onMouseDown={(e) => e.stopPropagation()}
+            onChange={(e) => {
+              actions.setPhotoProperty(photo.id, 'date', moment(e.target.value))
+            }}
+          />
+        </div>
+
+        <div>
+          <label htmlFor={'photo__content' + photo.id} className="photo__label">
+            Content
+          </label>
+          <textarea
+            id={'photo__content' + photo.id}
+            className="photo__input photo__content"
+            value={photo.content}
+            onKeyDown={(e) => e.stopPropagation()}
+            onMouseDown={(e) => e.stopPropagation()}
+            onChange={(e) => {
+              actions.setPhotoProperty(photo.id, 'content', e.target.value)
+            }}
+          />
+        </div>
+
+        <div>
+          <label
+            htmlFor={'photo__location' + photo.id}
+            className="photo__label"
+          >
+            Location
+          </label>
+          {photo.latitude !== false && photo.longitude !== false ? (
             <input
+              id={'photo__location' + photo.id}
               type="text"
-              id={'photo__name' + this.props.photo.id}
-              className="photo__input photo__name"
-              value={this.props.photo.name}
-              onKeyDown={e => e.stopPropagation()}
-              onMouseDown={e => e.stopPropagation()}
-              onChange={e => {
-                this.props.actions.setPhotoProperty(
-                  this.props.photo.id,
-                  'name',
-                  e.target.value
-                )
-              }}
+              readOnly={true}
+              className="photo__input photo__location"
+              onMouseDown={(e) => e.stopPropagation()}
+              onKeyDown={(e) => e.stopPropagation()}
+              value={`${photo.latitude},${photo.longitude}`}
             />
-          </div>
-
-          <div>
-            <label
-              htmlFor={'photo__date' + this.props.photo.id}
-              className="photo__label"
-            >
-              Date
-            </label>
-            <input
-              type="datetime-local"
-              id={'photo__date' + this.props.photo.id}
-              className="photo__input photo__date"
-              value={this.props.photo.date.format('YYYY-MM-DDThh:mm:ss')}
-              onKeyDown={e => e.stopPropagation()}
-              onMouseDown={e => e.stopPropagation()}
-              onChange={e => {
-                this.props.actions.setPhotoProperty(
-                  this.props.photo.id,
-                  'date',
-                  moment(e.target.value)
-                )
-              }}
-            />
-          </div>
-
-          <div>
-            <label
-              htmlFor={'photo__content' + this.props.photo.id}
-              className="photo__label"
-            >
-              Content
-            </label>
-            <textarea
-              id={'photo__content' + this.props.photo.id}
-              className="photo__input photo__content"
-              value={this.props.photo.content}
-              onKeyDown={e => e.stopPropagation()}
-              onMouseDown={e => e.stopPropagation()}
-              onChange={e => {
-                this.props.actions.setPhotoProperty(
-                  this.props.photo.id,
-                  'content',
-                  e.target.value
-                )
-              }}
-            />
-          </div>
-
-          <div>
-            <label
-              htmlFor={'photo__location' + this.props.photo.id}
-              className="photo__label"
-            >
-              Location
-            </label>
-            {this.props.photo.latitude !== false &&
-            this.props.photo.longitude !== false ? (
-              <input
-                id={'photo__location' + this.props.photo.id}
-                type="text"
-                readOnly={true}
-                className="photo__input photo__location"
-                onMouseDown={e => e.stopPropagation()}
-                onKeyDown={e => e.stopPropagation()}
-                value={`${this.props.photo.latitude},${
-                  this.props.photo.longitude
-                }`}
-              />
-            ) : null}
-            <MapInput
-              latitude={this.props.photo.latitude}
-              longitude={this.props.photo.longitude}
-              onChange={this.handleLocationChange}
-            />
-          </div>
+          ) : null}
+          <MapInput
+            latitude={photo.latitude}
+            longitude={photo.longitude}
+            onChange={handleLocationChange}
+          />
         </div>
       </div>
-    )
-  }
+    </div>
+  )
 }
 
-function mapStateToProps(state, props) {
-  return {
-    user: state.user.toJS(),
-  }
-}
+const mapStateToProps = (state, props) => ({
+  user: state.user.toJS(),
+})
 
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: bindActionCreators(
-      {
-        setPhotoProperty: setPhotoProperty,
-      },
-      dispatch
-    ),
-  }
-}
+const mapDispatchToProps = (dispatch) => ({
+  actions: bindActionCreators(
+    {
+      setPhotoProperty: setPhotoProperty,
+    },
+    dispatch
+  ),
+})
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Photo)
+export default connect(mapStateToProps, mapDispatchToProps)(Photo)
