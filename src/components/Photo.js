@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { getData } from 'exif-js'
 import moment from 'moment'
 import classnames from 'classnames'
-import MapInput from './map-input'
+import MapInput from './MapInput'
 import { setPhotoProperty } from '../actions'
 import '../styles/photo.css'
 
@@ -16,7 +15,8 @@ const ConvertDMSToDD = function (degrees, minutes, seconds, direction) {
   return dd
 }
 
-const Photo = ({ actions, user, photo, file: fileProp, dragging = false }) => {
+const Photo = ({ photo, file: fileProp, dragging = false }) => {
+  const dispatch = useDispatch()
   const [uploading, setUploading] = useState(false)
   const [exif, setExif] = useState(null)
   const [file, setFile] = useState(fileProp)
@@ -29,16 +29,20 @@ const Photo = ({ actions, user, photo, file: fileProp, dragging = false }) => {
           // Set date from exif data
           setExif(this.exifdata)
           if (this.exifdata.DateTimeOriginal) {
-            actions.setPhotoProperty(
-              photo.id,
-              'date',
-              moment(this.exifdata.DateTimeOriginal, 'YYYY:MM:DD hh:mm:ss')
+            dispatch(
+              setPhotoProperty(
+                photo.id,
+                'date',
+                moment(this.exifdata.DateTimeOriginal, 'YYYY:MM:DD hh:mm:ss')
+              )
             )
           } else if (this.exifdata.DateTime) {
-            actions.setPhotoProperty(
-              photo.id,
-              'date',
-              moment(this.exifdata.DateTime, 'YYYY:MM:DD hh:mm:ss')
+            dispatch(
+              setPhotoProperty(
+                photo.id,
+                'date',
+                moment(this.exifdata.DateTime, 'YYYY:MM:DD hh:mm:ss')
+              )
             )
           }
           // Set GPS from exif
@@ -62,8 +66,8 @@ const Photo = ({ actions, user, photo, file: fileProp, dragging = false }) => {
               this.exifdata.GPSLongitude[2],
               this.exifdata.GPSLongitudeRef
             )
-            actions.setPhotoProperty(photo.id, 'latitude', lat)
-            actions.setPhotoProperty(photo.id, 'longitude', lng)
+            dispatch(setPhotoProperty(photo.id, 'latitude', lat))
+            dispatch(setPhotoProperty(photo.id, 'longitude', lng))
           }
         }
       })
@@ -88,8 +92,8 @@ const Photo = ({ actions, user, photo, file: fileProp, dragging = false }) => {
   }, [fileProp])
 
   const handleLocationChange = (latitude, longitude) => {
-    actions.setPhotoProperty(photo.id, 'latitude', latitude)
-    actions.setPhotoProperty(photo.id, 'longitude', longitude)
+    dispatch(setPhotoProperty(photo.id, 'latitude', latitude))
+    dispatch(setPhotoProperty(photo.id, 'longitude', longitude))
   }
 
   return (
@@ -130,7 +134,7 @@ const Photo = ({ actions, user, photo, file: fileProp, dragging = false }) => {
             onKeyDown={(e) => e.stopPropagation()}
             onMouseDown={(e) => e.stopPropagation()}
             onChange={(e) => {
-              actions.setPhotoProperty(photo.id, 'name', e.target.value)
+              dispatch(setPhotoProperty(photo.id, 'name', e.target.value))
             }}
           />
         </div>
@@ -147,7 +151,9 @@ const Photo = ({ actions, user, photo, file: fileProp, dragging = false }) => {
             onKeyDown={(e) => e.stopPropagation()}
             onMouseDown={(e) => e.stopPropagation()}
             onChange={(e) => {
-              actions.setPhotoProperty(photo.id, 'date', moment(e.target.value))
+              dispatch(
+                setPhotoProperty(photo.id, 'date', moment(e.target.value))
+              )
             }}
           />
         </div>
@@ -163,7 +169,7 @@ const Photo = ({ actions, user, photo, file: fileProp, dragging = false }) => {
             onKeyDown={(e) => e.stopPropagation()}
             onMouseDown={(e) => e.stopPropagation()}
             onChange={(e) => {
-              actions.setPhotoProperty(photo.id, 'content', e.target.value)
+              dispatch(setPhotoProperty(photo.id, 'content', e.target.value))
             }}
           />
         </div>
@@ -197,17 +203,4 @@ const Photo = ({ actions, user, photo, file: fileProp, dragging = false }) => {
   )
 }
 
-const mapStateToProps = (state, props) => ({
-  user: state.user.toJS(),
-})
-
-const mapDispatchToProps = (dispatch) => ({
-  actions: bindActionCreators(
-    {
-      setPhotoProperty: setPhotoProperty,
-    },
-    dispatch
-  ),
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(Photo)
+export default Photo

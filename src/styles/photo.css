@@ -1,7 +1,7 @@
 .photo {
   display: block;
   margin: 2em auto;
-  padding: 1em;
+  padding: 1rem;
   overflow: hidden;
   border-radius: 0.3rem;
   border: 1px solid;
@@ -27,7 +27,7 @@
 .photo__preview {
   display: block;
   max-width: 100%;
-  margin: 0 0 1em;
+  margin: 0 0 1rem;
   position: relative;
 }
 
@@ -59,18 +59,18 @@
   height: auto;
   max-width: 100%;
   max-width: calc(100% + 2em);
-  margin: -1em -1em 0 -1em;
+  margin: -1rem -1rem 0 -1rem;
 }
 
 .photo__preview__url,
 .photo__preview__error {
   display: block;
-  margin-left: -1em;
-  margin-right: -1em;
+  margin-left: -1rem;
+  margin-right: -1rem;
   bottom: 0;
-  padding: 0.3em 1em;
+  padding: 0.3rem 1rem;
   word-wrap: break-word;
-  font-size: 1em;
+  font-size: 0.8em;
   line-height: 1.1;
 }
 
@@ -93,7 +93,7 @@
   .photo__details {
     width: 70%;
     float: right;
-    padding-left: 1em;
+    padding-left: 1rem;
   }
 } */
 
@@ -106,9 +106,9 @@
 .photo__input {
   display: block;
   width: 100%;
-  font-size: 1em;
+  font-size: 1rem;
   padding: 0.5em;
-  margin: 0 0 1em;
+  margin: 0 0 1rem;
   border: 1px solid #ccc;
   border-radius: 0.5em;
 }

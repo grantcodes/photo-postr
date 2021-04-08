@@ -43,8 +43,8 @@ const MapInput = ({ latitude = false, longitude = false, onChange }) => {
         scrollWheelZoom={false}
       >
         <TileLayer
-          url="https://{s}.tile.openstreetmap.se/hydda/full/{z}/{x}/{y}.png"
-          attribution={`Tiles courtesy of <a href="http://openstreetmap.se/" target="_blank">OpenStreetMap Sweden</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>`}
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          attribution={`&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors`}
         />
         {showMarker ? <Marker icon={divIcon} position={[lat, lng]} /> : null}
       </Map>

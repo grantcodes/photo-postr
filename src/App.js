@@ -1,14 +1,14 @@
 import React, { Fragment } from 'react'
-// import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux'
-import PhotoList from './components/photo-list'
-import Uploader from './components/uploader'
-import Login from './components/login'
-import Toolbar from './components/toolbar'
-import Gallery from './components/gallery'
-import Logout from './components/logout'
+import { useSelector } from 'react-redux'
+import PhotoList from './components/PhotoList'
+import Uploader from './components/Uploader'
+import Login from './components/Login'
+import Toolbar from './components/Toolbar'
+import Gallery from './components/Gallery'
+import Logout from './components/Logout'
 
-const App = ({ user = null }) => {
+const App = () => {
+  const user = useSelector((state) => state.user.toJS())
   const isLoggedIn =
     user && user.me && user.token && user.micropubEndpoint && user.mediaEndpoint
 
@@ -28,8 +28,4 @@ const App = ({ user = null }) => {
   )
 }
 
-const mapStateToProps = (state, props) => ({
-  user: state.user.toJS(),
-})
-
-export default connect(mapStateToProps)(App)
+export default App
