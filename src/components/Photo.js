@@ -17,7 +17,6 @@ const ConvertDMSToDD = function (degrees, minutes, seconds, direction) {
 
 const Photo = ({ photo, file: fileProp, dragging = false }) => {
   const dispatch = useDispatch()
-  const [uploading, setUploading] = useState(false)
   const [exif, setExif] = useState(null)
   const [file, setFile] = useState(fileProp)
   const [previewUrl, setPreviewUrl] = useState(URL.createObjectURL(fileProp))
@@ -72,17 +71,7 @@ const Photo = ({ photo, file: fileProp, dragging = false }) => {
         }
       })
     }
-
-    if (!photo.photoUrl && !uploading) {
-      setUploading(true)
-    }
   }, [])
-
-  useEffect(() => {
-    if (uploading && photo.photoUrl) {
-      setUploading(false)
-    }
-  }, [photo])
 
   useEffect(() => {
     if (fileProp !== file) {
@@ -105,7 +94,7 @@ const Photo = ({ photo, file: fileProp, dragging = false }) => {
     >
       <div
         className={classnames('photo__preview', {
-          'photo__preview--uploading': !photo.photoUrl && !photo.error,
+          'photo__preview--uploading': photo.uploading,
         })}
       >
         <img
