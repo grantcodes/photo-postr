@@ -42,7 +42,7 @@ server.post('/authurl', function (req, res, next) {
     .getAuthUrl()
     .then((url) =>
       res.json({
-        url: url,
+        url,
         authEndpoint: micropub.options.authEndpoint,
         tokenEndpoint: micropub.options.tokenEndpoint,
         micropubEndpoint: micropub.options.micropubEndpoint,
@@ -63,7 +63,7 @@ server.post('/token', function (req, res, next) {
         .then((data) => {
           if (data && data['media-endpoint']) {
             res.json({
-              token: token,
+              token,
               mediaEndpoint: data['media-endpoint'],
             })
           } else {
@@ -87,17 +87,20 @@ server.post('/media', upload.single('file'), function (req, res, next) {
     const filePath = folder + '/' + req.file.originalname
     fs.renameSync(req.file.path, filePath)
 
+    console.log('Uploading file to ' + req.body.mediaEndpoint)
     micropub
       .postMedia(fs.createReadStream(filePath))
       .then((url) => {
         fs.unlinkSync(filePath)
-        res.json({ url: url })
+        res.json({ url })
       })
       .catch((err) => {
+        console.error('Error posting to media endpoint', err)
         fs.unlinkSync(filePath)
         next(err)
       })
   } else {
+    console.error('Not uploading media because us missing parameters', req.body)
     next(new Error('Missing parameters'))
   }
 })
@@ -107,7 +110,7 @@ server.post('/photo', function (req, res, next) {
   applyMicropubOptions(req.body.user)
   micropub
     .create(req.body.micropub, 'json')
-    .then((url) => res.json({ url: url }))
+    .then((url) => res.json({ url }))
     .catch(next)
 })
 
@@ -116,7 +119,7 @@ server.post('/gallery', function (req, res, next) {
   applyMicropubOptions(req.body.user)
   micropub
     .create(req.body.micropub, 'json')
-    .then((url) => res.json({ url: url }))
+    .then((url) => res.json({ url }))
     .catch(next)
 })
 

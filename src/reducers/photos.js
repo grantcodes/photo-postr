@@ -7,6 +7,14 @@ export default (state = initialState, action) => {
     case 'ADD_PHOTO': {
       return state.push(new Map(action.photo))
     }
+    case 'UPDATE_PHOTO': {
+      const photoIndex = state.findIndex(
+        (photo) => photo.get('id') === action.id
+      )
+      let photo = state.get(photoIndex)
+      photo = photo.merge(action.update)
+      return state.set(photoIndex, photo)
+    }
     case 'SET_PHOTO_PROPERTY': {
       const photoIndex = state.findIndex(
         (photo) => photo.get('id') === action.id

@@ -1,26 +1,14 @@
 import React, { useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import UploadZone from './UploadZone'
-import {
-  addPhoto,
-  setPhotoUploading,
-  setPhotoUploaded,
-  setPhotoProperty,
-  setPhotoUploadError,
-} from '../../actions'
+import { addPhoto } from '../../actions'
 import moment from 'moment'
 import { generate as generateId } from 'shortid'
 import classnames from 'classnames'
-import { postMedia } from '../../modules/rest-api'
 import '../../styles/uploader.css'
 
 const Uploader = () => {
   const dispatch = useDispatch()
-  const { user, uploading, photos } = useSelector((state) => ({
-    user: state.user.toJS(),
-    uploading: state.uploading.toJS(),
-    photos: state.photos.toJS(),
-  }))
 
   const [fullscreen, setFullscreen] = useState(false)
   const enableFullscreen = () => setFullscreen(true)
@@ -35,31 +23,6 @@ const Uploader = () => {
       window.removeEventListener('dragend', disableFullscreen)
     }
   }, [])
-
-  useEffect(() => {
-    const uploadLimit = 5
-    if (
-      uploading.uploading.length < uploadLimit &&
-      uploading.waiting.length > 0
-    ) {
-      const photoId = uploading.waiting[0]
-      const photo = photos.find((photo) => photo.id === photoId)
-      if (photo) {
-        dispatch(setPhotoUploading(photo.id))
-        postMedia(photo.file, user)
-          .then((res) => {
-            dispatch(setPhotoUploaded(photo.id))
-            if (res.url) {
-              dispatch(setPhotoProperty(photo.id, 'photoUrl', res.url))
-            }
-          })
-          .catch((err) => {
-            dispatch(setPhotoUploadError(photo.id))
-            console.log('Error uploading photo: ', err)
-          })
-      }
-    }
-  }, [uploading])
 
   const handleFiles = (files) => {
     setFullscreen(false)

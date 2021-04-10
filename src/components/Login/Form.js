@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import api from '../../modules/rest-api'
-import { setUserOption } from '../../actions'
+import { useDispatch } from 'react-redux'
+import { login, getAuthUrl } from '../../actions'
 
-const LoginForm = ({ actions }) => {
+const LoginForm = () => {
   const [domain, setDomain] = useState('')
   const [loading, setLoading] = useState(false)
-  const user = useSelector((state) => state.user.toJS())
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -16,20 +14,8 @@ const LoginForm = ({ actions }) => {
       const code = urlParams.get('code')
       const state = urlParams.get('state')
       if (code && state) {
-        console.log('Logging in or something')
         setLoading(true)
-        api('token', {
-          code: code,
-          ...user,
-        })
-          .then((res) => {
-            dispatch(setUserOption('token', res.token))
-            dispatch(setUserOption('mediaEndpoint', res.mediaEndpoint))
-          })
-          .catch((err) => {
-            setLoading(false)
-            console.error('Error finalizing login', err)
-          })
+        dispatch(login(code)).finally(() => setLoading(false))
       }
     }
   }, [])
@@ -39,25 +25,7 @@ const LoginForm = ({ actions }) => {
     if (loading) {
       return
     }
-    let state = user.state
-    if (!state) {
-      state = new Date().getTime()
-      dispatch(setUserOption('state', state))
-    }
-    dispatch(setUserOption('me', domain))
-    api('authurl', { me: domain, state: state })
-      .then((res) => {
-        if (res.tokenEndpoint) {
-          dispatch(setUserOption('tokenEndpoint', res.tokenEndpoint))
-        }
-        if (res.micropubEndpoint) {
-          dispatch(setUserOption('micropubEndpoint', res.micropubEndpoint))
-        }
-        if (res.url) {
-          window.location.href = res.url
-        }
-      })
-      .catch((err) => console.error(err))
+    dispatch(getAuthUrl(domain)).catch(console.error)
     return false
   }
 
