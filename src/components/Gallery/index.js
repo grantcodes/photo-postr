@@ -1,21 +1,16 @@
 import React, { useState, useEffect } from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import Name from './Name'
 import Slug from './Slug'
 import Content from './Content'
-import publishGallery from '../../modules/publish'
+import { publishGallery } from '../../actions'
 import '../../styles/gallery.css'
 
 const Gallery = () => {
+  const dispatch = useDispatch()
   const [posting, setPosting] = useState(false)
   const [success, setSuccess] = useState(null)
-  const user = useSelector((state) => state.user.toJS())
   const photos = useSelector((state) => state.photos.toJS())
-  const gallery = useSelector((state) => ({
-    name: state.gallery.get('name'),
-    content: state.gallery.get('content'),
-    slug: state.gallery.get('slug'),
-  }))
 
   useEffect(() => {
     window.onbeforeunload = () =>
@@ -29,7 +24,7 @@ const Gallery = () => {
     } else {
       setPosting(true)
       try {
-        const url = await publishGallery(gallery, photos, user)
+        const url = await dispatch(publishGallery())
         setSuccess(true)
         alert(
           `🎉🎉🎉\n\nSuccessfully posted your gallery to ${url}.\n\nSending you there now.`
