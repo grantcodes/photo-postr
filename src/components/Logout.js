@@ -5,7 +5,7 @@ import '../styles/logout.css'
 
 const Logout = () => {
   const dispatch = useDispatch()
-  const user = useSelector((state) => state.user.toJS)
+  const user = useSelector((state) => state.user.toJS())
 
   const handleLogout = (e) => {
     e.preventDefault()
