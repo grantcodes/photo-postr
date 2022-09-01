@@ -1,0 +1,41 @@
+.app-header {
+  background: var(--color-base-primary-500);
+  color: var(--color-base-background-main);
+  margin-block-end: calc(var(--size-space-unit) * 2);
+  padding-block: calc(var(--size-space-unit) * 2);
+}
+
+.app-header h1 {
+  margin: 0;
+}
+
+.app-header a {
+  color: inherit;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: calc(var(--size-space-unit) * 1);
+}
+
+.app-main {
+  padding-block: calc(var(--size-space-unit) * 2);
+}
+
+.app-footer {
+  background: var(--color-base-dark-main);
+  color: var(--color-base-light-shade);
+  padding-block: calc(var(--size-space-unit) * 4);
+  margin-block-start: calc(var(--size-space-unit) * 2);
+}
+
+.app-footer__inner {
+  flex-direction: row;
+  justify-content: center;
+  gap: calc(var(--size-space-unit) * 3);
+  row-gap: calc(var(--size-space-unit) * 2);
+  flex-wrap: wrap;
+}
+
+.app-footer p {
+  margin: 0;
+}

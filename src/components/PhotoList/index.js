@@ -1,4 +1,3 @@
-import React from 'react'
 import { useSelector } from 'react-redux'
 import SortableGrid from './SortableGrid'
 import StandardList from './StandardList'

@@ -1,5 +1,6 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { ButtonGroup, Button } from '@grantcodes/ui'
 import { sortByDate, showOrderGrid, hideOrderGrid } from '../actions'
 import '../styles/toolbar.css'
 
@@ -8,20 +9,20 @@ const Toolbar = () => {
   const orderGrid = useSelector((state) => state.app.get('orderGridShown'))
 
   return (
-    <div className="toolbar">
+    <ButtonGroup className="toolbar">
       {!orderGrid && (
-        <button onClick={() => dispatch(sortByDate())}>📅 Sort by Date</button>
+        <Button onClick={() => dispatch(sortByDate())}>📅 Sort by Date</Button>
       )}
       {orderGrid ? (
-        <button onClick={() => dispatch(hideOrderGrid())}>
+        <Button onClick={() => dispatch(hideOrderGrid())}>
           👍 Done Ordering
-        </button>
+        </Button>
       ) : (
-        <button onClick={() => dispatch(showOrderGrid())}>
+        <Button onClick={() => dispatch(showOrderGrid())}>
           👆 Manually Reorder
-        </button>
+        </Button>
       )}
-    </div>
+    </ButtonGroup>
   )
 }
 

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
+import { LoginForm } from '../LoginForm'
 import { login, getAuthUrl } from '../../actions'
 
-const LoginForm = () => {
-  const [domain, setDomain] = useState('')
+const Form = () => {
   const [loading, setLoading] = useState(false)
   const dispatch = useDispatch()
 
@@ -20,27 +20,11 @@ const LoginForm = () => {
     }
   }, [])
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    if (loading) {
-      return
-    }
+  const handleSubmit = (domain) => {
     dispatch(getAuthUrl(domain)).catch(console.error)
-    return false
   }
 
-  return (
-    <form onSubmit={handleSubmit} className="login__form">
-      <input
-        type="url"
-        placeholder="Your Domain"
-        onChange={(e) => setDomain(e.target.value)}
-      />
-      <button type="submit" disabled={loading}>
-        {loading ? 'Logging In...' : 'Login'}
-      </button>
-    </form>
-  )
+  return <LoginForm onSubmit={handleSubmit} loading={loading} />
 }
 
-export default LoginForm
+export default Form

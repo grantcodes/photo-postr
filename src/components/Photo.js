@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux'
 import { getData } from 'exif-js'
 import moment from 'moment'
 import classnames from 'classnames'
+import { CardContent, Label, Input, TextArea } from '@grantcodes/ui'
 import MapInput from './MapInput'
 import { setPhotoProperty } from '../actions'
 import '../styles/photo.css'
@@ -87,15 +88,15 @@ const Photo = ({ photo, file: fileProp, dragging = false }) => {
 
   return (
     <div
-      className={classnames('photo', {
-        'photo--is-dragging': dragging,
-        'photo--error': photo.error,
-      })}
+    // className={classnames('photo', {
+    //   'photo--is-dragging': dragging,
+    //   'photo--error': photo.error,
+    // })}
     >
       <div
-        className={classnames('photo__preview', {
-          'photo__preview--uploading': photo.uploading,
-        })}
+      // className={classnames('photo__preview', {
+      //   'photo__preview--uploading': photo.uploading,
+      // })}
       >
         <img
           src={previewUrl}
@@ -110,12 +111,12 @@ const Photo = ({ photo, file: fileProp, dragging = false }) => {
         )}
       </div>
 
-      <div className="photo__details">
+      <CardContent>
         <div>
-          <label htmlFor={'photo__name' + photo.id} className="photo__label">
+          <Label htmlFor={'photo__name' + photo.id} className="photo__label">
             Name
-          </label>
-          <input
+          </Label>
+          <Input
             type="text"
             id={'photo__name' + photo.id}
             className="photo__input photo__name"
@@ -129,10 +130,10 @@ const Photo = ({ photo, file: fileProp, dragging = false }) => {
         </div>
 
         <div>
-          <label htmlFor={'photo__date' + photo.id} className="photo__label">
+          <Label htmlFor={'photo__date' + photo.id} className="photo__label">
             Date
-          </label>
-          <input
+          </Label>
+          <Input
             type="datetime-local"
             id={'photo__date' + photo.id}
             className="photo__input photo__date"
@@ -148,10 +149,10 @@ const Photo = ({ photo, file: fileProp, dragging = false }) => {
         </div>
 
         <div>
-          <label htmlFor={'photo__content' + photo.id} className="photo__label">
+          <Label htmlFor={'photo__content' + photo.id} className="photo__label">
             Content
-          </label>
-          <textarea
+          </Label>
+          <TextArea
             id={'photo__content' + photo.id}
             className="photo__input photo__content"
             value={photo.content}
@@ -164,14 +165,14 @@ const Photo = ({ photo, file: fileProp, dragging = false }) => {
         </div>
 
         <div>
-          <label
+          <Label
             htmlFor={'photo__location' + photo.id}
             className="photo__label"
           >
             Location
-          </label>
+          </Label>
           {photo.latitude !== false && photo.longitude !== false ? (
-            <input
+            <Input
               id={'photo__location' + photo.id}
               type="text"
               readOnly={true}
@@ -187,7 +188,7 @@ const Photo = ({ photo, file: fileProp, dragging = false }) => {
             onChange={handleLocationChange}
           />
         </div>
-      </div>
+      </CardContent>
     </div>
   )
 }

@@ -1,5 +1,6 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { Button } from '@grantcodes/ui'
 import { setUserOption } from '../actions'
 import '../styles/logout.css'
 
@@ -18,9 +19,9 @@ const Logout = () => {
   return (
     <div className="logout">
       <span className="logout__user">Logged in as {user.me}</span>
-      <button className="button" onClick={handleLogout}>
+      <Button className="button" onClick={handleLogout} variant="secondary">
         Log Out
-      </button>
+      </Button>
     </div>
   )
 }

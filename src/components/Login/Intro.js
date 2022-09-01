@@ -1,15 +1,15 @@
-import React from 'react'
-import * as codeExamples from './code-examples'
+import { CodePreview } from '@grantcodes/ui'
+import { gallery as galleryCode, photo as photoCode } from './code-examples'
 
 const LoginIntro = () => (
   <div>
-    <h3>WTF is this thing?</h3>
+    <h2>WTF is this thing?</h2>
     <p>
       This is a <a href="https://indieweb.org/micropub">micropub</a> client for
       posting photo galleries / albums to your{' '}
       <a href="https://indieweb.org">indieweb</a> website
     </p>
-    <h4>Nerdy Stuff</h4>
+    <h3>Nerdy Stuff</h3>
     <p>For this to work on your site you need to support a few things:</p>
     <ul>
       <li>A micropub endpoint that supports json posts</li>
@@ -20,12 +20,12 @@ const LoginIntro = () => (
       <li>Visibility=unlisted support</li>
     </ul>
     <p>Each photo is sent individually:</p>
-    <div dangerouslySetInnerHTML={{ __html: codeExamples.photo }} />
+    <CodePreview language="json">{photoCode}</CodePreview>
     <p>
       Then the gallery request is sent with the collection of photo urls as
       children:
     </p>
-    <div dangerouslySetInnerHTML={{ __html: codeExamples.gallery }} />
+    <CodePreview language="json">{galleryCode}</CodePreview>
   </div>
 )
 

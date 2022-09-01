@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { Button, Card, CardActions, CardContent } from '@grantcodes/ui'
 import Name from './Name'
 import Slug from './Slug'
 import Content from './Content'
@@ -40,26 +41,32 @@ const Gallery = () => {
   }
 
   return (
-    <form className="gallery" onSubmit={handleSubmit}>
-      <h3>Gallery Information</h3>
+    <Card asChild>
+      <form className="gallery" onSubmit={handleSubmit}>
+        <CardContent>
+          <h3>Gallery Information</h3>
 
-      <Name />
-      <Slug />
-      <Content />
+          <Name />
+          <Slug />
+          <Content />
+        </CardContent>
 
-      <button
-        type="submit"
-        className="button"
-        disabled={
-          posting ||
-          photos.length < 1 ||
-          photos.find((photo) => !photo.photoUrl) ||
-          photos.find((photo) => photo.error)
-        }
-      >
-        {posting ? 'Posting...' : 'Publish Gallery'}
-      </button>
-    </form>
+        <CardActions>
+          <Button
+            type="submit"
+            className="button"
+            disabled={
+              posting ||
+              photos.length < 1 ||
+              photos.find((photo) => !photo.photoUrl) ||
+              photos.find((photo) => photo.error)
+            }
+          >
+            {posting ? 'Posting...' : 'Publish Gallery'}
+          </Button>
+        </CardActions>
+      </form>
+    </Card>
   )
 }
 

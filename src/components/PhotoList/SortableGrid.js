@@ -1,5 +1,6 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
+import { Card } from '@grantcodes/ui'
 import { reorderPhotos } from '../../actions'
 import { SortableContainer, SortableElement } from 'react-sortable-hoc'
 
@@ -17,11 +18,13 @@ const PhotoList = ({ photos }) => {
   ))
 
   const SortableList = SortableContainer(({ items }) => (
-    <ol className="order-grid">
-      {items.map((photo, index) => (
-        <SortableItem key={`item-${index}`} index={index} photo={photo} />
-      ))}
-    </ol>
+    <Card asChild>
+      <ol className="order-grid">
+        {items.map((photo, index) => (
+          <SortableItem key={`item-${index}`} index={index} photo={photo} />
+        ))}
+      </ol>
+    </Card>
   ))
 
   return (

@@ -1,5 +1,6 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { Label, Input } from '@grantcodes/ui'
 import { setGalleryName } from '../../actions'
 
 const GalleryName = () => {
@@ -8,10 +9,10 @@ const GalleryName = () => {
 
   return (
     <div>
-      <label htmlFor="gallery__name" className="photo__label">
+      <Label htmlFor="gallery__name" className="photo__label">
         Name
-      </label>
-      <input
+      </Label>
+      <Input
         type="text"
         id="gallery__name"
         className="photo__input"

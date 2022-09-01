@@ -1,17 +1,25 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
-import './styles/index.css'
-import App from './App'
+// import './styles/base.css'
+import { App } from './components/App'
 import Store from './store'
 import registerServiceWorker from './registerServiceWorker'
+import { Provider as ThemeProvider } from '@grantcodes/ui'
+// import '@grantcodes/styleguide/assets/fonts/greycliff.css'
+
+console.log(ThemeProvider)
 
 const StoreInstance = Store()
 
-ReactDOM.render(
+const AppWrapper = () => (
   <Provider store={StoreInstance}>
-    <App />
-  </Provider>,
-  document.getElementById('root')
+    <ThemeProvider theme="default">
+      <App />
+    </ThemeProvider>
+  </Provider>
 )
+
+ReactDOM.render(<AppWrapper />, document.getElementById('root'))
+
 registerServiceWorker()

@@ -1,25 +1,26 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { setGalleryContent } from '../../actions'
+import { Label, Input } from '@grantcodes/ui'
+import { setGallerySlug } from '../../actions'
 
-const GalleryContent = () => {
+const GallerySlug = () => {
   const dispatch = useDispatch()
-  const content = useSelector((state) => state.gallery.get('content'))
+  const slug = useSelector((state) => state.gallery.get('slug'))
 
   return (
     <div>
-      <label htmlFor="gallery__content" className="photo__label">
-        Content
-      </label>
-      <textarea
+      <Label htmlFor="gallery__slug" className="photo__label">
+        Slug
+      </Label>
+      <Input
         type="text"
-        id="gallery__content"
+        id="gallery__slug"
         className="photo__input"
-        value={content}
-        onChange={(e) => dispatch(setGalleryContent(e.target.value))}
-      ></textarea>
+        value={slug}
+        onChange={(e) => dispatch(setGallerySlug(e.target.value))}
+      />
     </div>
   )
 }
 
-export default GalleryContent
+export default GallerySlug

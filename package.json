@@ -3,25 +3,26 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "body-parser": "^1.19.0",
+    "@grantcodes/ui": "file:../ui",
+    "body-parser": "^1.20.0",
     "classnames": "^2.3.1",
     "cors": "^2.8.5",
     "exif-js": "^2.3.0",
-    "express": "^4.17.1",
+    "express": "^4.18.1",
     "immutable": "^3.8.2",
-    "leaflet": "^1.7.1",
+    "leaflet": "^1.8.0",
     "micropub-helper": "^1.6.2",
-    "moment": "^2.29.1",
+    "moment": "^2.29.4",
     "multer": "^1.4.3",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-dropzone-component": "^3.2.0",
-    "react-leaflet": "^3.2.1",
-    "react-redux": "^7.2.5",
+    "react-leaflet": "^3.2.5",
+    "react-redux": "^7.2.8",
     "react-scripts": "4.0.3",
     "react-sortable-hoc": "^2.0.0",
-    "redux": "^4.1.1",
-    "redux-thunk": "^2.3.0",
+    "redux": "^4.2.0",
+    "redux-thunk": "^2.4.1",
     "shorthash": "0.0.2",
     "shortid": "^2.2.16"
   },
@@ -42,5 +43,12 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "@types/jest": "^28.1.7",
+    "@types/node": "^18.7.6",
+    "@types/react": "^18.0.17",
+    "@types/react-dom": "^18.0.6",
+    "typescript": "^4.7.4"
+  }
 }
